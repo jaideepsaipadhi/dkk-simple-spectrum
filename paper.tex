@@ -791,40 +791,55 @@ distinct submodules of one dimension vector contradict rigidity, so $\dimv M$
 is not extremal and $\delta>0$ by Corollary \ref{cor:pol}.
 \end{proof}
 
-Three further reductions are unconditional and may help.  Running the induction
-along the socle steps, with $D$ the colour-$t$ threshold of the partial module
-$X$: (a) a colour-$t$ step contributes nothing in degrees $<D-2$; (b) if it
-contributes at $D-2$ then $\dim X_t[D]=1$ and the $D-2$ contribution is exactly
-one special line, so a single further dimension at $D$ suffices.  Both follow
-from the simple socle of $I_\ka$ together with the propagation of Lemma
-\ref{lem:Id}.  And (c), the condition ``every neighbour of $t$ is full at degree $D+1$'' ---
-which is what makes a colour-$t$ socle step reach the threshold $D$ --- is
-provable at \emph{all three} neighbours, assuming only that $X$ is an up-set at
-those neighbours.  At a colour-$t$ step $c=\mu'_t-\mu'_{n-1}\ge1$ with
-$\mu'_t\le1$ forces $\mu'_{n-1}\le0$, so $r'=|\mathrm{supp}\,\mu'\cap\{n-1,n\}|$
-is $0$ or $2$; and if $X_t[D]\ne0$ then $v'_t=2a$ is even with $D=t+k-2a$.
-
-At the leaves, the $\varepsilon$-coordinate identities give
+The conjecture now reduces to a single statement at a single vertex.  Carry
+along the construction the hypothesis
 \[
-   v'_{n-1}+v'_n=v'_t-\mu'_{n-1}\in\{2a,2a+1\},\qquad
-   |v'_{n-1}-v'_n|=|\mu'_n|\le1,
+   (H)\qquad X \text{ is an up-set at } t \text{ and at the two leaves,}
 \]
-so $\min(v'_{n-1},v'_n)\ge a$, which is exactly the condition for an up-set at
-a leaf to be full at $D+1$.  At the chain neighbour, $c\ge1$ gives
-$v'_{t-1}\ge2a-[k=t]$, while the profile of $I_\ka$ satisfies
+where \emph{up-set} means zero below one degree, proper at it, full above; at
+$t$ this is top-truncation, and at a leaf, where $\dim (I_\ka)_j[d]\le1$, it
+says $X_j$ occupies a final segment.  Steps at other colours do not change $X$
+there, so $(H)$ need only be checked at colour-$t$ and leaf steps.
+
+\emph{Leaf steps.}  Let $j$ be a leaf, whose only neighbour is $t$.  Then
+$c_j=v'_t-2v'_j\ge1$ because the word is reduced.  The leaf degrees are
+$g_1+1>\dots>g_k+1$ with $g_i=t+k-2i$, so under $(H)$ the largest unfilled one
+is $D_j=t+k-2v'_j-1$, while $D=t+k-2a$ if $v'_t=2a$ and $D=t+k-2a-2$ if
+$v'_t=2a+1$.  In the first case $c_j\ge1$ forces $v'_j\le a-1$, in the second
+$v'_j\le a$; either way $D_j>D$.  As $X$ is an up-set at $t$ it is full above
+$D$, hence at $D_j+1$, so the socle condition
+$a_{j\to t}\xi\in X_j[D_j+1]$ is automatic and the top unfilled leaf slot lies
+in $\soc_{(j)}(I_\ka/X)$ --- as does every unfilled leaf slot at a degree
+$\ge D$, a consecutive block at the top.  So $(H)$ is preserved at leaf steps.
+
+\emph{Colour-$t$ steps.}  Preservation at $t$ is (G1) and (G2), and both follow
+from $(H)$, the bound $c\ge1$, and two inequalities about the profile of
+$I_\ka$ alone:
 \[
    \sum_{d\ge D+1}\dim (I_\ka)_{t-1}[d]\ \le\ 2a-[k=t]
+   \quad\text{and}\quad
+   \le\ 2a+2-[k=t]
 \]
-(checked for all $D_5$--$D_8$ and all $k\le n-2$, $52/52$; it is a statement
-about the image formula of Lemma \ref{lem:P} alone), so an up-set at $t-1$ is
-full at $D+1$ as well.  Both halves are confirmed directly, at $1104$ leaf
-instances and $527$ chain instances.
+in the two cases (verified $52/52$ and $80/80$; they are statements about the
+image formula of Lemma \ref{lem:P}).  At the leaves, $c\ge1$ gives
+$\mu'_{n-1}\le0$, and then
+$v'_{n-1}+v'_n=v'_t-\mu'_{n-1}$ with $|v'_{n-1}-v'_n|=|\mu'_n|\le1$ yields
+$\min(v'_{n-1},v'_n)\ge a$ in the (G1) case, and in the (G2) case exactly one
+leaf deficient by one dimension when $r'=0$ and none when $r'=2$.
 
-So the conjecture reduces to the up-set property at $t$ and at its neighbours
-holding \emph{simultaneously} along the construction --- which is why we state
-it as one statement about staircases rather than as a chain of separate claims.
+\emph{What is left.}  Both (G1) and (G2) also need $X$ to be an up-set at the
+chain neighbour $t-1$, which is not part of $(H)$.  So everything rests on
+\[
+   (*)\qquad \text{at every colour-$t$ socle step, } X \text{ is an up-set at }
+   t-1 .
+\]
+This holds at all $2337$ colour-$t$ steps over $D_5$--$D_7$
+(\texttt{upsets.py}).  It cannot be replaced by a uniform statement: $X$ is an
+up-set at every neighbour of the colour being applied only $18982$ times out of
+$19076$, and globally $X$ is an up-set at $t-1$ at $8959$ of $8960$ stages ---
+the single exception occurring at a colour-$1$ step, where it is not needed.
 
-Two facts delimit the search.Two facts delimit the search.  The conjecture genuinely needs extremality: the
+Two facts delimit the search.Two facts delimit the search.Two facts delimit the search.  The conjecture genuinely needs extremality: the
 staircase property fails for $78$ of the $1124$ graded submodules above, and
 the analogous statement for arbitrary submodules is false.  And the obvious
 mechanism is not available: when $X_t[D]$ is a line it is \emph{always} one of

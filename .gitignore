@@ -3,6 +3,4 @@ __pycache__/
 *.aux
 *.log
 *.out
-*.fls
-*.fdb_latexmk
 *.tar.gz

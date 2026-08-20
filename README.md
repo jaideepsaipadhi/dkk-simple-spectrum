@@ -97,18 +97,45 @@ subspace, so M_t[d] is one of them. The leaf-exchanging automorphism τ fixes I_
 and exchanges the two special lines, so τ(M) ≠ M; when v_{n−1} = v_n it
 preserves dim M, and two submodules of one dimension vector contradict rigidity.
 
-**Three unconditional reductions** (running the induction along socle steps,
-D = colour-t threshold of the partial module X):
+**The conjecture now rests on one statement at one vertex.** Carry along the
+construction the hypothesis
 
-- (a) a colour-t step contributes nothing below D−2;
-- (b) if it contributes at D−2 then dim X_t[D] = 1 and that contribution is
-  exactly one special line, so one further dimension at D suffices;
-- (c) assuming the leaf clause, both leaves are automatically full at D+1:
-  c = μ'_t − μ'_{n−1} ≥ 1 with μ'_t ≤ 1 forces μ'_{n−1} ≤ 0, and then
-  v'_{n−1} + v'_n ∈ {2a, 2a+1} with |v'_{n−1} − v'_n| ≤ 1 gives
-  min(v'_{n−1}, v'_n) ≥ a.
+> **(H)** X is an up-set at t and at the two leaves
 
-(a) and (b) follow from the simple socle plus the Lemma I propagation.
+(*up-set* = zero below one degree, proper at it, full above; at t that is
+top-truncation, at a leaf it says X_j occupies a final segment). Steps at other
+colours don't touch X there, so (H) need only be checked at colour-t and leaf
+steps.
+
+*Leaf steps — the mechanism is proved.* For a leaf j, whose only neighbour is t,
+c_j = v'_t − 2v'_j ≥ 1 because the word is reduced. Leaf degrees are
+g_1+1 > … > g_k+1 with g_i = t+k−2i, so under (H) the largest unfilled one is
+D_j = t+k−2v'_j−1, while D = t+k−2a or t+k−2a−2 according as v'_t = 2a or 2a+1.
+In the first case c_j ≥ 1 forces v'_j ≤ a−1, in the second v'_j ≤ a; either way
+**D_j > D**. Since X is an up-set at t it is full above D, hence at D_j+1, so
+the socle condition is automatic and the top unfilled leaf slot — indeed every
+unfilled slot at degree ≥ D, a consecutive block — lies in the socle.
+
+*Colour-t steps.* Preservation at t is (G1) and (G2), and **both are now
+proved** from (H), the bound c ≥ 1, and two inequalities about the profile of
+I_κ alone (52/52 and 80/80). At the leaves c ≥ 1 gives μ'_{n−1} ≤ 0, and then
+v'_{n−1} + v'_n = v'_t − μ'_{n−1} with |v'_{n−1} − v'_n| ≤ 1 gives
+min(v'_{n−1}, v'_n) ≥ a for (G1); for (G2), exactly one leaf deficient by one
+dimension when r' = 0 and none when r' = 2.
+
+Also unconditional, from the simple socle plus the Lemma I propagation: a
+colour-t step contributes nothing below D−2, and if it contributes at D−2 then
+dim X_t[D] = 1 and that contribution is exactly one special line.
+
+*What is left.* (G1) and (G2) also need X to be an up-set at the **chain
+neighbour t−1**, which is not part of (H). Everything rests on
+
+> **(\*)** at every colour-t socle step, X is an up-set at t−1.
+
+Verified 2337/2337 (`upsets.py`). It cannot be replaced by a uniform claim: X is
+an up-set at every neighbour of the applied colour only 18982/19076 times, and
+globally at t−1 at 8959/8960 stages — the single exception at a colour-1 step,
+where it isn't needed.
 
 **Two facts that delimit the search.** The conjecture genuinely needs
 extremality — the staircase property fails for 78 of those 1124 submodules. And
@@ -130,12 +157,6 @@ Two things that were open in earlier drafts and are now closed:
   torus acting through the bigrading sees a weight that is an injective affine
   function of degree. So the criterion is convention-independent.
 
-## Problem 2 (separate)
-
-`krylov-wang-conj16/` holds an independent computational attack on Conjecture
-1.6 of Krylov–Wang, [arXiv:2608.03314](https://arxiv.org/abs/2608.03314) — a
-different problem, sharing no code with the above. See its own README.
-
 ## Core files
 
 | file | contents |
@@ -154,6 +175,7 @@ different problem, sharing no code with the above. See its own README.
 | `violators.py` | δ, |supp μ| and leaf symmetry of the upward-closure violators |
 | `filltop.py` | the socle-step induction reducing Proposition T to statement (b) |
 | `epscrit.py` | the ε-coordinate signature of the critical steps |
+| `upsets.py` | the reduction of the conjecture to (*) |
 | `claimG.py` | Claim G and the proved leaf case, link by link |
 | `upclosure.py` | Lemma U, Lemma S′, the defect δ |
 
