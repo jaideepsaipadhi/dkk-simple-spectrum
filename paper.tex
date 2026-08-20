@@ -64,9 +64,12 @@ with a squeeze against $\dimv I_\ka=\la-w_0\la$.  Simple spectrum then becomes
 the assertion that no two elements of the resulting coloured graded set share a
 colour and a degree, which is decidable in polynomial time from any reduced
 word.  In type $D_n$, for non-spin $\la$, we make the answer completely explicit:
-writing $\mu=\sum_{i\in S}\eta_ie_i$ in Bourbaki coordinates, the spectrum is simple if
-and only if $r+2m\le 2$, where $m$ counts the minus signs among the first $n-2$
-coordinates and $r=|S\cap\{n-1,n\}|$.  We also record an element of $D_4$ that
+writing $\mu=\sum_{i\in S}\eta_ie_i$ in Bourbaki coordinates, the spectrum is
+simple if and only if $r+2m\le 2$, where $m$ counts the minus signs among the
+first $n-2$ coordinates and $r=|S\cap\{n-1,n\}|$.  This last statement rests, for
+$\la=\om_k$ with $k\ge2$, on a truncation property of $I_\ka$ that we verify
+by machine rather than prove; the main theorem above, and the reduction of the
+criterion to the trivalent node, do not.  We also record an element of $D_4$ that
 is fully commutative but does not have simple spectrum, showing that the
 sufficient condition considered in \cite[Ex.~5.12]{DKK} fails in both
 directions.
@@ -178,11 +181,13 @@ Let $t$ be the trivalent node of $\Gamma$ (types $D$ and $E$).  If
 $\dim V_t[d]\le1$ for all $d$, then $\dim V_i[d]\le1$ for all $i$ and $d$.
 \end{theorem}
 
-Theorem \ref{prop:lemA} is proved in \S\ref{sec:typeD} for type $D$, by a
-window-containment argument, and in \S\ref{sec:typeE} for type $E$, where it
-follows from an inward-injectivity lemma about $I_\ka$ whose verification is a
-\emph{complete} finite computation --- $E_6$, $E_7$ and $E_8$ have only
-finitely many triples (fundamental weight, vertex, degree).  In types $D$ and $E$ this reduces the criterion to a
+Theorem \ref{prop:lemA} follows in both types from a single inward-injectivity
+lemma about $I_\ka$ (Lemma \ref{lem:I}, \S\ref{sec:typeE}).  In type $E$ that
+lemma is a \emph{complete} finite computation, since $E_6$, $E_7$ and $E_8$
+have only finitely many triples (fundamental weight, vertex, degree); in type
+$D$ it is proved uniformly in the rank (Lemma \ref{lem:Id}).  Remark
+\ref{rem:nowindow} records why the more obvious argument, containment of
+multiplicity-$2$ windows, fails in both types.  In types $D$ and $E$ this reduces the criterion to a
 single vertex; in type $A$ there is no trivalent node, but there the question
 is settled outright:
 
@@ -209,9 +214,9 @@ $\eta_i=\pm1$.  Put
 \]
 Then $T$ acts with simple spectrum if and only if $r+2m\le2$; equivalently, iff
 $m=0$, or $m=1$ and $r=0$.  For the spin weights the spectrum is always simple.
-The proof is unconditional for $k\le2$ and for the spin weights; for $k\ge3$ it
-rests on Proposition \ref{prop:T}, which we verify computationally
-(Remark \ref{rem:Tk3}).
+The proof is unconditional for the spin weights; for $k=2$ it rests on a
+generation pattern checked for $D_4$--$D_7$, and for $k\ge3$ on Proposition
+\ref{prop:T}, which we verify computationally.  See Remark \ref{rem:Tk3}.
 \end{theorem}
 
 Finally we record a counterexample in the direction opposite to
@@ -262,8 +267,8 @@ independent solver that enumerates graded submodules directly.  In particular
 the construction reproduces the three coloured posets printed in
 \cite[pp.~82--83]{DKK}, Hasse edges included, and the criterion agrees with the
 solver on $2179$ elements across types $A$, $D$ and $E$ --- every fundamental
-weight of $A_3$--$A_6$, $D_4$--$D_7$, $E_6$ and the two minuscule-framing
-weights of $E_7$ whose Weyl orbit has at most $400$ elements.  See \S\ref{sec:verification}.
+weight of $A_3$--$A_6$, $D_4$--$D_7$, $E_6$, together with $E_7\om_1$ and
+$E_7\om_7$, whose Weyl orbits have at most $400$ elements.  See \S\ref{sec:verification}.
 
 \subsection{Acknowledgements}
 The problem was communicated by V.~Krylov.
@@ -325,11 +330,40 @@ $\sigma'$.
 We use Savage--Tingley's identification of the quiver variety with a quiver
 Grassmannian.
 
-\begin{proposition}[{\cite[Thm.~4.4, Prop.~4.9]{ST}}]\label{prop:ST}
+\begin{proposition}[{\cite[Thm.~4.4, Prop.~4.9]{ST}; \cite{BK,BKT}}]\label{prop:ST}
 $\mathfrak{L}(v,w)\cong\mathrm{Gr}_{v}\!\left(\bigoplus_i I_i^{\,w_i}\right)$,
 and if $v=\la-w\la$ is $w$-extremal then there is exactly one submodule of
 $\bigoplus_i I_i^{\,w_i}$ with dimension vector $v$.
 \end{proposition}
+
+The uniqueness has a sharper and more useful form.  Baumann and Kamnitzer
+attach to a $\Pia$-module $T$ a pseudo-Weyl polytope $\mathrm{Pol}(T)$, and
+show \cite{BK} that it is the convex hull of the dimension vectors of the
+submodules of $T$; Baumann, Kamnitzer and Tingley prove the \emph{rigidity}
+property \cite[\S3.1]{BKT}: \emph{if $x$ is a vertex of $\mathrm{Pol}(T)$ then
+$T$ has a unique subobject $X$ with $\dimv X=x$.}  For $T=I_\ka$ the polytope
+is the weight polytope of $\om_\ka$ reflected in the origin, so its vertices
+are exactly the $w$-extremal dimension vectors, and Proposition \ref{prop:ST}
+is the vertex case.  Two consequences we use below:
+
+\begin{corollary}\label{cor:pol}
+Let $U\subseteq I_\ka$ be a submodule.  Then $\mu=\la-\dimv U$ is a weight of
+the irreducible representation $L(\om_\ka)$, and
+\[
+   \delta(\dimv U)\;=\;2(\dimv U)_\ka-(\dimv U)^{\mathsf T}C(\dimv U)
+   \;=\;(\la,\la)-(\mu,\mu)\;\ge\;0,
+\]
+with equality if and only if $\dimv U$ is a vertex of $\mathrm{Pol}(I_\ka)$,
+i.e.\ $w$-extremal.  If $I_\ka$ carries two distinct submodules with the same
+dimension vector $v$, then $v$ is not a vertex and $\delta(v)>0$.
+\end{corollary}
+
+In type $D_n$ with $\la=\om_k$, $k\le n-2$, the weights of $L(\om_k)$ are the
+$\mu$ with entries in $\{0,\pm1\}$ and $|\mathrm{supp}\,\mu|\le k$ congruent to
+$k$ modulo $2$, so Corollary \ref{cor:pol} gives
+$\delta(\dimv U)=k-|\mathrm{supp}\,\mu|$ --- verified on all $2014$ graded
+submodules of $I_\ka$ for $D_5\om_2$, $D_5\om_3$, $D_6\om_3$, $D_6\om_4$,
+$D_7\om_3$.
 
 For $\la=\om_\ka$ the framing is $\bigoplus_i I_i^{w_i}=I_\ka$, so
 Proposition \ref{prop:ST} says: \emph{$I_\ka$ has a unique submodule of
@@ -341,25 +375,54 @@ dimension vector.  That is what Theorem \ref{thm:main} does.
 
 It remains to match the two gradings.
 
+\begin{lemma}[the bidegree is determined]\label{lem:bigrade}
+$\Pia$ is bigraded by the numbers of $a$- and $a^*$-arrows separately, the
+relations $\sum_a(aa^*-a^*a)$ being bihomogeneous of bidegree $(1,1)$.  For
+$\Gamma$ a Dynkin diagram --- hence a tree --- the piece $(\Pia e_j)_i[d]$ is
+pure of a single bidegree, namely
+\[
+   p=\tfrac12\bigl(d+f(i)-f(j)\bigr),\qquad q=\tfrac12\bigl(d-f(i)+f(j)\bigr),
+\]
+where $f$ is any function on the vertices with $f(\mathrm{head})-
+f(\mathrm{tail})=1$ on every arrow of the chosen orientation.
+\end{lemma}
+
+\begin{proof}
+Such an $f$ exists because $\Gamma$ is a tree: define it by walking out from
+any root; there is no cycle to obstruct consistency.  An $a$-arrow raises $f$
+by $1$ and its reverse lowers it by $1$, so along any path from $j$ to $i$ one
+has $p-q=f(i)-f(j)$.  With $p+q=d$ this determines $p$ and $q$.
+\end{proof}
+
 \begin{proposition}\label{prop:grading}
-The $T$-weight decomposition of $V$ coincides, up to an overall affine
-normalisation independent of $i$, with the path-length grading inherited from
-$I_\ka$.  In particular $T$ acts on every $V_i$ with simple spectrum if and
-only if $\dim V_i[d]\le1$ for all $i$ and $d$.
+The $T$-weight decomposition of $V_i$ coincides with its path-length
+decomposition, up to an overall affine normalisation independent of $i$.  In
+particular
+\[
+   T \text{ acts on every } V_i \text{ with simple spectrum}
+   \iff
+   \dim V_i[d]\le 1 \ \text{ for all } i \text{ and } d .
+\]
 \end{proposition}
 
 \begin{proof}
-Because $\la=\om_\ka$ is fundamental, the framing space is one dimensional and
-the framing torus acts on all of $V$ by a single scalar character, contributing
-only a global shift.  The remaining torus contains the $\bbC^\times$ that
-scales every arrow of $\overline{Q}$ with weight one; its weight decomposition
-on $\Pia e_{\ka'}$ is exactly the path-length grading.  Since $v$ is
-$w$-extremal, Proposition \ref{prop:ST} gives a \emph{unique} submodule of
-$I_\ka$ with dimension vector $v$; uniqueness forces that submodule to be
-stable under the $\bbC^\times$-action, hence to be a graded submodule, and the
-induced grading is the restriction of the path-length grading.  Distinctness of
-$T$-weights within $V_i$ is therefore distinctness of degrees, i.e.\
-$\dim V_i[d]\le1$.
+Because $\la=\om_\ka$ is fundamental the framing space is one dimensional, so
+the framing torus acts on all of $V$ through a single character and contributes
+only a global shift.  The rest of $T$ acts through the bigrading of $\Pia$: any
+such torus assigns to $(\Pia e_{\ka'})_i[d]$ a weight that is a fixed integral
+combination $\alpha p+\beta q$ of the two bidegrees.  By Lemma \ref{lem:bigrade} both
+$p$ and $q$ are affine functions of $d$ with $i,\ka'$ fixed, with $p$ and $q$
+each of slope $\pm\frac12$ in $d$; hence $\alpha p+\beta q$ is an affine function of $d$
+of slope $\frac12(\alpha+\beta)$, which is injective in $d$ unless
+$\alpha+\beta=0$.  The case $\alpha+\beta=0$ is excluded because the
+symplectic form has nonzero weight, that being what makes the fixed locus of
+$T$ on $\Mvw(v,w)$ isolated.  So the weight determines and is determined by
+$d$, degree by degree.
+
+Finally $V$ is a graded submodule: since $v$ is $w$-extremal, Proposition
+\ref{prop:ST} gives a \emph{unique} submodule of $I_\ka$ with dimension vector
+$v$, and uniqueness forces it to be stable under the whole torus, hence to
+carry the restricted grading.
 \end{proof}
 
 \section{The socle-step identity}\label{sec:identity}
@@ -433,7 +496,11 @@ values $\ge1$.
 \end{lemma}
 
 \begin{proof}
-(i) Write $u=s_{i_{p+1}}\cdots s_{i_\ell}$, so $\mu^{(p)}=u\la$.  If $c_p=0$
+(i) Write $u=s_{i_{p+1}}\cdots s_{i_\ell}$, so $\mu^{(p)}=u\la$.  The word is
+reduced, so $\ell(s_{i_p}u)=\ell(u)+1$ and hence $u^{-1}\al_{i_p}>0$; since
+$\la$ is dominant,
+$c_p=\langle (u^{-1}\al_{i_p})^\vee,\la\rangle\ge0$.  It remains to exclude
+$c_p=0$.  If $c_p=0$
 then $s_{i_p}u\la=u\la$, hence
 $w\la=s_{i_1}\cdots s_{i_{p-1}}u\la$, and $s_{i_1}\cdots s_{i_{p-1}}u$ has
 length at most $\ell-1$.  This contradicts the minimality of $\ell(w)$ among
@@ -488,8 +555,10 @@ depends only on $w$.
 \end{proof}
 
 \begin{corollary}\label{cor:tops}
-At every step of the construction, $\topp_{i}(X)=0$ for the colour $i$ about to
-be applied, and $\dim\soc_{(i)}(I_\ka/X)=c$ exactly.
+At the \emph{first} letter of each block $i^{\,c}$ of $\sigma$ one has
+$\topp_{i}(X)=0$ and $\dim\soc_{(i)}(I_\ka/X)=c$ exactly.  (Within a block
+this fails, and must: after the first letter $\topp_i=c$ and
+$\soc_{(i)}(I_\ka/X)=0$, as computed in Remark \ref{rem:repeats}.)
 \end{corollary}
 
 \begin{remark}
@@ -621,28 +690,36 @@ $I_\ka$ completely.)  They enter the window one at a time as $d$ grows, so
 $a_d(t)$ is $0$
 for $d<t-k$, then $1$, then $2$ on $[t+2-k,\,t+k)$, then $1$ on
 $[t+k,\,t+2+k)$, then $0$; the degrees of the correct parity in the middle
-range number $(2k-4)/2+1=k-1$.  The same computation at a general vertex $i$
-shows the value $2$ occurs exactly for
+range number $(2k-4)/2+1=k-1$.  The same computation at a vertex $i\le t$ of the
+chain shows the value $2$ occurs exactly for
 $\max(|i-k|,2L-k-i)\le d<\min(i+k,2L+k-i)$, giving $\max(0,i+k-n+1)$ degrees.
+(At the two leaves $n-1,n$ the folding gives $a_d(n-1)=a_d(n)=b_d$ with
+$2b_d=a_d(t+1)\le2$, so $b_d\le1$ and they never carry multiplicity $2$; the
+displayed count applies only on the chain $i\le t$.)
 \end{proof}
 
-\begin{proposition}[Proposition \ref{prop:lemA} in type $D$]\label{prop:Ad}
-For $\Gamma=D_n$ and every $i\le t$, the set of degrees at which vertex $i$ can
-carry multiplicity $\ge2$ in $I_\ka$ is contained in the corresponding set for
-$t$.  Consequently a quotient of $I_\ka$ with multiplicity-free colour-$t$ part
-is multiplicity-free everywhere.
-\end{proposition}
+\begin{remark}[window containment fails, and why]\label{rem:nowindow}
+It is tempting to argue Theorem \ref{prop:lemA} in type $D$ from Lemma
+\ref{lem:P} alone: the multiplicity-$2$ window of vertex $i\le t$ is
+$[2L-k-i,\ i+k)$ with $L=n-1$, whose endpoints satisfy $2L-k-i\ge L-k+1$ and
+$i+k\le (L-1)+k$, so it is contained in the window of $t$ \emph{as an
+interval}.  This is not enough, for two independent reasons.
 
-\begin{proof}
-By Lemma \ref{lem:P} the window at vertex $i$ is $[2L-k-i,\ i+k)$ with
-$L=n-1$.  Its left endpoint satisfies $2L-k-i\ge 2L-k-(L-1)=L-k+1$, the left
-endpoint for $i=t=L-1$; and its right endpoint satisfies $i+k\le (L-1)+k$, the
-right endpoint for $t$.  So the window is contained in that of $t$.  For the two leaves $n-1,n$ the
-folding of Lemma \ref{lem:P} gives $a_d(n-1)=a_d(n)=b_d$ with
-$2b_d=a_d(t+1)\le2$, so $b_d\le1$ and those vertices never carry a repeat at
-all.  Since $\dim V_i[d]\le\dim (I_\ka)_i[d]$, no repeat can occur at a degree
-outside the colour-$t$ window.
-\end{proof}
+First, the degrees carried by vertex $i$ obey the parity constraint
+$d\equiv i+k\pmod2$, so the actual degree \emph{sets} need not be nested when
+$i\not\equiv t\pmod 2$.  In $D_6$ with $\ka=3$ and $t=4$, vertex $3$ carries
+multiplicity $2$ exactly at degree $4$ while vertex $t$ carries it exactly at
+degrees $3,5$; the sets are disjoint.  (The same happens in $D_7$, $k=3$.)
+Second, even granting containment, knowing that a repeat at $i$ occurs at a
+degree in the $t$-window does not produce a repeat at $t$: nothing transports
+$\dim V_i[d]\ge2$ to $\dim V_t[d']\ge2$.
+
+The mechanism that does work is inward injectivity, Lemma \ref{lem:I} below,
+which moves a repeat one vertex towards $t$ and shifts the degree by one --- and
+with that shift the $D_6$ numbers do line up, $i=3$ at $d=4$ mapping to $t$ at
+$d=5$.  Lemma \ref{lem:I} is stated and used in \S\ref{sec:typeE}; it is what
+proves Theorem \ref{prop:lemA} in both types.
+\end{remark}
 
 \begin{proposition}[top truncation]\label{prop:T}
 Let $N\subseteq I_\ka$ be a graded submodule with $\dimv N=v=\la-w\la$ for
@@ -660,7 +737,7 @@ multiplicities, namely
 \]
 Only the multiset is used below.
 
-\begin{proof}[Proof for $k=2$]
+\begin{proof}[Proof for $k=2$, checked for $n\le7$]
 Here the colour-$t$ profile of $I_\ka$ is $(1,2,1)$ at degrees $d_0,d_0+2,
 d_0+4$ with $d_0=n-4$.  Computing the submodule generated by a single
 colour-$t$ element shows that its colour-$t$ content is all of $(1,2,1)$ if the
@@ -668,46 +745,91 @@ element sits in degree $d_0$, is $(1,1)$ in degrees $d_0+2,d_0+4$ if it sits in
 degree $d_0+2$ (for every choice of vector there), and is $(1)$ if it sits in
 degree $d_0+4$.  Hence the only colour-$t$ profiles a submodule can have are
 $(0,0,0),(0,0,1),(0,1,1),(0,2,1),(1,2,1)$, and each is a top truncation.  No
-hypothesis on $v$ is needed.
+hypothesis on $v$ is needed.  The generation pattern was computed for
+$D_4$--$D_7$; it is uniform in $n$, but we have not written the induction out,
+so Theorem \ref{thm:typeD} at $k=2$ carries that caveat.
 \end{proof}
 
-\begin{remark}[the case $k\ge3$]\label{rem:Tk3}
-Proposition \ref{prop:T} is equivalent to \emph{upward closure} at $t$: if
-$V_t[d]\ne0$ then $V_t[d+2]=(I_\ka)_t[d+2]$.  Two ingredients reduce the
-general case to a single sharp statement.
+\begin{remark}[what Proposition \ref{prop:T} rests on]\label{rem:Tk3}
+Call a graded submodule $M\subseteq I_\ka$ a \emph{staircase} if its colour-$t$
+multiplicities are the greedy top truncation of those of $I_\ka$ --- zero below
+one degree, proper at it, full above --- and if at each of the two leaves $M$
+occupies a final segment of degrees.  Everything left open in this paper is the
+following single statement.
 
-\emph{Lemma U.}  For $x\in (I_\ka)_t[d]$ the submodule $\Pia x$ contains the
-three double paths $y_j=a_{j\to t}a_{t\to j}x\in (I_\ka)_t[d+2]$, and the
-preprojective relation at $t$ is one linear relation among them, so they span
-at most two dimensions.  In type $D$, Lemma \ref{lem:P} gives
-$\dim (I_\ka)_t[d+2]\le2$, so there is room for the span to be everything ---
-and it is, unless $x$ lies on one of exactly two distinguished lines, the
-kernels of the arrows from $t$ to the two leaves $n-1$ and $n$.  Call these the
-\emph{special} lines.  (Verified for all $D_n$ with $n\le8$ and all $k\le n-2$:
-$300/300$ lines.)  Consequently upward closure can fail only where $V_t[d]$ is
-a special line.
+\begin{conjecture}\label{conj:staircase}
+If $\dimv M$ is $w$-extremal then $M$ is a staircase.  Equivalently, by the
+rigidity property of \cite{BKT} quoted in \S\ref{sec:setup}, a submodule that
+is not a staircase satisfies $\delta(\dimv M)>0$, and so is never the unique
+submodule of its dimension vector.
+\end{conjecture}
 
-\emph{Lemma S$'$.}  In an extremal module $V$, a special line occurs at colour
-$t$ only at a degree whose successor $d+2$ is already full.  (Verified on all
-$1990$ colour-$t$ graded pieces of the extremal modules of $D_4$--$D_7$,
-$1131$ of which are special lines, with no exception.)
+Conjecture \ref{conj:staircase} gives Proposition \ref{prop:T} at once: an
+extremal $v$ carries a unique submodule, namely $V=\soc_\sigma(I_\ka)$ by
+Theorem \ref{thm:main}, and the conjecture makes it a staircase.  It is
+verified on all $1124$ graded submodules of $I_\ka$ over $D_4$--$D_7$: exactly
+$78$ fail to be staircases and every one has $\delta=2$
+(\texttt{master.py}).
 
-Lemma S$'$ is what remains unproved for $k\ge3$; Proposition \ref{prop:T} and
-hence Theorem \ref{thm:typeD} are unconditional for $k\le2$ and for the spin
-weights.  We note two things in its favour beyond the direct check.  First,
-$k=2$ is precisely the setting of all three examples of \cite[\S5.4.2]{DKK} and
-of Example \ref{ex:fcbad}.  Second, and more substantially, the failures are
-excluded by a quantity with geometric meaning: enumerating \emph{all} graded
-submodules $N\subseteq I_\ka$ --- not merely the extremal ones --- every single
-one that fails upward closure satisfies
+\begin{proposition}\label{prop:tau}
+Conjecture \ref{conj:staircase} holds whenever $v_{n-1}=v_n$.
+\end{proposition}
+
+\begin{proof}
+Suppose $M$ is not a staircase at $t$, say $M_t[d]\ne0$ while
+$M_t[d+2]\subsetneq (I_\ka)_t[d+2]$.  Every nonzero $x\in M_t[d]$ is then
+\emph{special} --- annihilated by an arrow from $t$ to a leaf --- since
+otherwise the three double paths $a_{j\to t}a_{t\to j}x$, which satisfy one
+linear relation and hence span at most two dimensions, would by direct
+computation span all of $(I_\ka)_t[d+2]$, forcing it into $M$.  The special
+vectors form two lines rather than a subspace, so $M_t[d]$ is one of them, and
+$\dim (I_\ka)_t[d]=2$ at every such degree.  The diagram automorphism $\tau$
+exchanging the leaves fixes $\ka$ (as $k\le n-2$), hence acts on $I_\ka$, and
+exchanges the two arrows out of $t$ to the leaves, hence the two special lines;
+so $\tau(M)\ne M$.  When $v_{n-1}=v_n$ we have $\dimv\tau(M)=\dimv M$, and two
+distinct submodules of one dimension vector contradict rigidity, so $\dimv M$
+is not extremal and $\delta>0$ by Corollary \ref{cor:pol}.
+\end{proof}
+
+Three further reductions are unconditional and may help.  Running the induction
+along the socle steps, with $D$ the colour-$t$ threshold of the partial module
+$X$: (a) a colour-$t$ step contributes nothing in degrees $<D-2$; (b) if it
+contributes at $D-2$ then $\dim X_t[D]=1$ and the $D-2$ contribution is exactly
+one special line, so a single further dimension at $D$ suffices.  Both follow
+from the simple socle of $I_\ka$ together with the propagation of Lemma
+\ref{lem:Id}.  And (c), the condition ``every neighbour of $t$ is full at degree $D+1$'' ---
+which is what makes a colour-$t$ socle step reach the threshold $D$ --- is
+provable at \emph{all three} neighbours, assuming only that $X$ is an up-set at
+those neighbours.  At a colour-$t$ step $c=\mu'_t-\mu'_{n-1}\ge1$ with
+$\mu'_t\le1$ forces $\mu'_{n-1}\le0$, so $r'=|\mathrm{supp}\,\mu'\cap\{n-1,n\}|$
+is $0$ or $2$; and if $X_t[D]\ne0$ then $v'_t=2a$ is even with $D=t+k-2a$.
+
+At the leaves, the $\varepsilon$-coordinate identities give
 \[
-   \delta(v)\;=\;2v_\ka-v^{\mathsf T}Cv\;=\;(\la,\la)-(\mu,\mu)\;>\;0,
+   v'_{n-1}+v'_n=v'_t-\mu'_{n-1}\in\{2a,2a+1\},\qquad
+   |v'_{n-1}-v'_n|=|\mu'_n|\le1,
 \]
-that is, its dimension vector is not extremal at all and $\Mvw(v,\om_\ka)$ has
-positive dimension.  Over $D_5e_3$, $D_6e_3$, $D_6e_4$ and $D_7e_3$ there are
-$96$ such submodules and all $96$ have $\delta\in\{2,4\}$.  Since $\delta$
-depends only on $v$ and not on the grading, a proof that a violator always has
-$\delta>0$ would establish Proposition \ref{prop:T} outright.
+so $\min(v'_{n-1},v'_n)\ge a$, which is exactly the condition for an up-set at
+a leaf to be full at $D+1$.  At the chain neighbour, $c\ge1$ gives
+$v'_{t-1}\ge2a-[k=t]$, while the profile of $I_\ka$ satisfies
+\[
+   \sum_{d\ge D+1}\dim (I_\ka)_{t-1}[d]\ \le\ 2a-[k=t]
+\]
+(checked for all $D_5$--$D_8$ and all $k\le n-2$, $52/52$; it is a statement
+about the image formula of Lemma \ref{lem:P} alone), so an up-set at $t-1$ is
+full at $D+1$ as well.  Both halves are confirmed directly, at $1104$ leaf
+instances and $527$ chain instances.
+
+So the conjecture reduces to the up-set property at $t$ and at its neighbours
+holding \emph{simultaneously} along the construction --- which is why we state
+it as one statement about staircases rather than as a chain of separate claims.
+
+Two facts delimit the search.Two facts delimit the search.  The conjecture genuinely needs extremality: the
+staircase property fails for $78$ of the $1124$ graded submodules above, and
+the analogous statement for arbitrary submodules is false.  And the obvious
+mechanism is not available: when $X_t[D]$ is a line it is \emph{always} one of
+the two special lines ($527/527$), so one leaf arrow annihilates it and that
+leaf's fullness at $D+1$ comes from elsewhere in $X$.
 \end{remark}
 
 \begin{proof}[Proof of Theorem \ref{thm:typeD}]
@@ -716,8 +838,8 @@ applies.  Let $k\le n-2$.  By Lemma \ref{lem:P} the colour-$t$ profile of
 $I_\ka$ is $(1,2^{k-1},1)$.  By Theorem \ref{thm:main}, $V$ is a submodule of
 $I_\ka$ with $\dimv V=v$, so Proposition \ref{prop:T} applies to it and the
 colour-$t$ multiplicities of $V$ are the truncation displayed above.  Every
-multiplicity is $\le1$ exactly when $v_t\le2$.  By Proposition
-\ref{prop:Ad}, simplicity at $t$ implies simplicity everywhere.  Lemma
+multiplicity is $\le1$ exactly when $v_t\le2$.  By Theorem \ref{prop:lemA},
+simplicity at $t$ implies simplicity everywhere.  Lemma
 \ref{lem:C} identifies $v_t=r+2m$.
 \end{proof}
 
@@ -735,13 +857,11 @@ settle type $E$ as well: the criterion is decidable from any reduced word.
 Two further points deserve comment.
 
 \subsection{Reduction to the trivalent node}
-The window-containment argument of Proposition \ref{prop:Ad} does not survive
-into type $E$: in $E_6$ with $\ka=3$ (so $I_3=\Pia e_5$) vertex $3$ carries
-multiplicity $2$ in path-length degree $4$, whereas vertex $4$ is zero in that
-degree, its multiplicity-$2$ degrees being $3,5,7$.  Since $\Gamma$ has arms of
-length $\ge2$ on two sides, a repeat can sit at a degree at which the trivalent
-node is quiet inside $I_\ka$.  A different mechanism is available, and it is
-both simpler and uniform.
+As Remark \ref{rem:nowindow} explains, no containment-of-windows argument
+proves Theorem \ref{prop:lemA}, in either type: in $E_6$ with $\ka=3$ (so
+$I_3=\Pia e_5$) vertex $3$ carries multiplicity $2$ in path-length degree $4$
+while vertex $4$ is zero there, and the same phenomenon already occurs in
+$D_6$ with $\ka=3$.  The mechanism that does work is the following.
 
 For $i\ne t$ let $\mathrm{nx}(i)$ denote the neighbour of $i$ one step closer
 to $t$.
@@ -771,11 +891,48 @@ $\dim V_t[d+\mathrm{dist}(i,t)]\ge2$.  Contrapositively, if $V_t$ is
 multiplicity-free then so is $V$.
 \end{proof}
 
-\begin{remark}
-The same lemma holds in type $D$ for every rank tested ($D_4$ through $D_{10}$,
-$126$ instances), so inward injectivity gives a second, uniform proof of
-Theorem \ref{prop:lemA} there; we keep the window argument of Proposition
-\ref{prop:Ad} because it is rank-uniform by construction.
+In type $D$ the same statement holds, and there it can be proved outright,
+uniformly in the rank.
+
+\begin{lemma}[Lemma \ref{lem:I} in type $D$]\label{lem:Id}
+Let $\Gamma=D_n$, $t=n-2$, let $i<t$ be a chain vertex and let $d$ satisfy
+$\dim (I_\ka)_i[d]\ge2$.  Then the inward arrow
+$(I_\ka)_i[d]\to(I_\ka)_{i+1}[d+1]$ is injective.
+\end{lemma}
+
+\begin{proof}
+Suppose $x\ne0$ lies in the kernel.  For $i<t$ the vertex $i$ has exactly the
+two neighbours $i-1$ and $i+1$.  By Lemma \ref{lem:R} the socle of $I_\ka$ is
+simple and concentrated in the top degree, so an element killed by every arrow
+out of $i$ is either zero or that socle generator; since
+$\dim (I_\ka)_i[d]\ge2$ we are below the top degree, and therefore
+\[
+   y:=a_{i\to i-1}(x)\ne0 .
+\]
+The preprojective relation at $i$ reads
+$\varepsilon\, a_{i+1\to i}a_{i\to i+1}+\varepsilon'\,
+a_{i-1\to i}a_{i\to i-1}=0$ on $(I_\ka)_i[d]$; applied to $x$, whose first
+term vanishes by hypothesis, it gives $a_{i-1\to i}(y)=0$.  So $y$ is a nonzero
+element of $(I_\ka)_{i-1}[d+1]$ killed by \emph{its} inward arrow: the same
+situation, one vertex further from $t$ and one degree higher.
+
+Iterating $i-1$ times produces a nonzero $z\in (I_\ka)_1[d+i-1]$ killed by the
+arrow $1\to2$.  In $D_n$ the vertex $1$ has $2$ as its only neighbour, so $z$
+is killed by every arrow out of $1$ and hence lies in $\soc(I_\ka)=S_\ka$,
+forcing $\ka=1$.  But by Lemma \ref{lem:P} a chain vertex $i$ carries
+multiplicity $2$ in exactly $\max(0,i+k-n+1)$ degrees, which vanishes for
+$k=1$ and $i\le n-2$; so $\dim (I_\ka)_i[d]\ge2$ is impossible when $\ka=1$.
+Contradiction.
+\end{proof}
+
+\begin{remark}\label{rem:Idtype}
+The two leaves $n-1,n$ need no argument: by the folding in Lemma \ref{lem:P}
+they satisfy $a_d(n-1)=a_d(n)=b_d$ with $2b_d=a_d(t+1)\le2$, so $b_d\le1$ and
+Lemma \ref{lem:Id} is vacuous there.  With Lemma \ref{lem:Id} in hand the
+proof of Theorem \ref{prop:lemA} given above applies verbatim in type $D$, for
+every rank.  It is also confirmed directly for $D_4$--$D_{10}$ ($126$
+instances) by \texttt{inwardlemma.py}, and the two inputs --- simple socle and
+the relation at a chain vertex --- by \texttt{inwardproof.py}.
 \end{remark}
 
 \subsection{No closed form of type-$D$ shape}
@@ -783,8 +940,7 @@ What does \emph{not} carry over is the closed form of Theorem \ref{thm:typeD}:
 $v_t$ is no longer a complete invariant.  In $E_6$ with $\la=\om_3$ both simple
 and non-simple elements occur at $v_t=3$; likewise in $E_7$ with $\la=\om_2$ at
 $v_t=4$.  A closed form must therefore involve more than the multiplicity at
-the trivalent node.  Empirically the classification is a function of the
-dimension vector restricted to the ball of radius $3$ about $t$.
+the trivalent node.  We have not found one.
 
 The colour-$t$ multiplicity profiles of $I_\ka$ in type $E$ are finite data,
 computed once and for all; in $E_6$ they are $(1,1,1,1)$, $(1,1,2,1,1)$,
@@ -803,7 +959,8 @@ prints a pass/fail line.
 \begin{itemize}
 \item \texttt{proof.py} --- the five steps of \S\ref{sec:proof}.  The
 Crawley-Boevey identity holds at $5517/5517$ socle steps; $\dimv
-I_\ka=\la-w_0\la$ at $37/37$ injectives across $A_4,A_5,D_4,D_5,D_6,E_6,E_7$;
+I_\ka=\la-w_0\la$ at $47/47$ injectives across
+$A_3,A_4,A_5,D_4,D_5,D_6,D_7,E_6,E_7$;
 $\dimv\soc_\sigma(I_\ka)=v$ for $706/706$ elements; the minuscule statement for
 $256/256$; Proposition \ref{prop:lemA} for $981/981$ elements, of which $681$ are of type
 $E$ and the rest of type $D$.
@@ -816,13 +973,21 @@ changes the characteristic.
 reproduced with their Hasse edges; the criterion against an independent
 graded-submodule solver; word-independence; Theorem \ref{thm:typeD}.
 \item \texttt{trunctest.py} --- Proposition \ref{prop:T} (top truncation) on
-$1000$ elements of $D_4$--$D_7$, every fundamental weight with orbit at most
-$400$, no exceptions.
+$1000$ elements of $D_4$--$D_7$, every non-spin fundamental weight
+($k\le n-2$) with orbit at most $400$, no exceptions.
 \item \texttt{inwardlemma.py} --- Lemma \ref{lem:I}, exhaustively in $E_6$,
 $E_7$, $E_8$ ($315$ instances) and for $D_4$--$D_{10}$ ($126$ instances).
-\item \texttt{upclosure.py} --- Lemma U ($300$ lines), Lemma S$'$ ($1990$
-colour-$t$ graded pieces) and the defect computation of Remark
-\ref{rem:Tk3} ($96$ violators, all with $\delta>0$).
+\item \texttt{inwardproof.py} --- the inputs to Lemma \ref{lem:Id}: simple
+socle in the top degree ($39$ injectives, $D_4$--$D_9$), multiplicity-freeness
+on the chain for $\ka=1$, and the relation at a chain vertex ($550$ instances).
+\item \texttt{bigrade.py} --- Lemma \ref{lem:bigrade}: $\Gamma$ is a tree and
+the potential $f$ exists, for $A_2$--$A_8$, $D_4$--$D_9$, $E_6$, $E_7$, $E_8$.
+\item \texttt{master.py} --- Conjecture \ref{conj:staircase} over all $1124$
+graded submodules of $I_\ka$ for $D_4$--$D_7$: exactly $78$ non-staircases,
+every one with $\delta=2$.
+\item \texttt{filltop.py}, \texttt{claimG.py}, \texttt{epscrit.py},
+\texttt{violators.py} --- the unconditional reductions (a), (b), (c) of Remark
+\ref{rem:Tk3} and the structure of the non-staircases.
 \item \texttt{squeeze.py}, \texttt{homological.py}, \texttt{headrule.py},
 \texttt{lemA.py}, \texttt{eproj.py} --- the individual ingredients.
 \end{itemize}
@@ -836,6 +1001,13 @@ solver element by element.  All computations are over a finite prime field; the
 whole suite was rerun at $p=5,11,13$ with identical results.
 
 \begin{thebibliography}{99}
+
+\bibitem{BK} P.~Baumann and J.~Kamnitzer, \emph{Preprojective algebras and MV
+polytopes}, Represent.\ Theory \textbf{16} (2012), 152--188.
+
+\bibitem{BKT} P.~Baumann, J.~Kamnitzer and P.~Tingley, \emph{Affine
+Mirkovi\'c--Vilonen polytopes}, Publ.\ Math.\ IH\'ES \textbf{120} (2014),
+113--205.
 
 \bibitem{CB} W.~Crawley-Boevey, \emph{On the exceptional fibres of Kleinian
 singularities}, Amer.\ J.\ Math.\ \textbf{122} (2000), 1027--1037.
