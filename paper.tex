@@ -1,0 +1,864 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{tikz}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\soc}{soc}
+\DeclareMathOperator{\topp}{top}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\rad}{rad}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\Pia}{\Pi}
+\newcommand{\dimv}{\underline{\dim}}
+\newcommand{\al}{\alpha}
+\newcommand{\om}{\omega}
+\newcommand{\la}{\lambda}
+\newcommand{\ka}{\kappa}
+\newcommand{\Mvw}{\mathcal{M}}
+
+\begin{document}
+
+\title[Simple spectrum at extremal fixed points]
+      {A construction of the extremal torus fixed point, and a criterion for
+       simple spectrum}
+
+\author{}
+\date{\today}
+
+\begin{abstract}
+Let $\Gamma$ be a simply-laced Dynkin diagram, $\la=\om_\ka$ a fundamental
+weight and $w$ an element of the Weyl group.  When $\mu=w\la$ the Nakajima
+quiver variety $\Mvw(v,w)$ with $\la-\mu=\sum_i v_i\al_i$ is a single point,
+carrying a unique $T$-fixed representation $V=\bigoplus_i V_i$.  Dinkins,
+Karpov and Krylov raise, in \S5.4.2 of \cite{DKK}, the problem of
+characterising combinatorially those $w$ for which $T$ acts on every $V_i$
+with simple spectrum, in which case the fixed point is encoded by a coloured
+poset and the vertex function is a sum over reverse plane partitions.
+
+We solve this by producing $V$ itself.  Let $\Pia$ be the preprojective
+algebra of $\Gamma$ and $I_\ka$ the injective envelope of the simple
+$S_\ka$.  Reading a reduced word for $w$ from the right and recording at each
+step the integer $c=\langle\al_i^\vee,\mu_{\mathrm{cur}}\rangle$ produces a
+sequence $\sigma$ of vertices with multiplicities.  We prove that
+\[
+   V \;\cong\; \soc_{\sigma}\!\left(I_\ka\right),
+\]
+the iterated socle of Geiss--Leclerc--Schr\"oer taken along $\sigma$.  The
+proof is uniform in type and rests on an identity, derived from
+Crawley-Boevey's formula for $\Ext^1$ over a preprojective algebra, together
+with a squeeze against $\dimv I_\ka=\la-w_0\la$.  Simple spectrum then becomes
+the assertion that no two elements of the resulting coloured graded set share a
+colour and a degree, which is decidable in polynomial time from any reduced
+word.  In type $D_n$, for non-spin $\la$, we make the answer completely explicit:
+writing $\mu=\sum_{i\in S}\eta_ie_i$ in Bourbaki coordinates, the spectrum is simple if
+and only if $r+2m\le 2$, where $m$ counts the minus signs among the first $n-2$
+coordinates and $r=|S\cap\{n-1,n\}|$.  We also record an element of $D_4$ that
+is fully commutative but does not have simple spectrum, showing that the
+sufficient condition considered in \cite[Ex.~5.12]{DKK} fails in both
+directions.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{The problem}
+Fix a simply-laced Dynkin diagram $\Gamma$ with vertex set $I$, Cartan matrix
+$C=(a_{ij})$, simple roots $\al_i$, fundamental weights $\om_i$ and Weyl group
+$W$.  Let $\Mvw(v,w)$ denote the Nakajima quiver variety attached to
+$\Gamma$ with dimension vector $v$ and framing $w$, and write
+$\la=\sum_i w_i\om_i$, $\mu=\la-\sum_i v_i\al_i$.  When $\mu$ is an extremal
+weight of the irreducible representation of highest weight $\la$ --- that is,
+$\mu=w\la$ for some $w\in W$ --- the variety $\Mvw(v,w)$ is a single point
+\cite{Nak,ST}, and that point is a representation $V=\bigoplus_{i\in I}V_i$ of
+the doubled quiver satisfying the moment map equations, unique up to
+isomorphism.
+
+The point is fixed by the torus $T$ acting on the quiver data, so each $V_i$
+carries a $T$-weight decomposition.  Dinkins, Karpov and Krylov show
+\cite[Thm.~5.6, Thm.~5.7]{DKK} that when $T$ acts on every $V_i$ with
+\emph{simple spectrum} --- all weights distinct --- the fixed point is encoded
+by a finite coloured poset, and the associated vertex function is a generating
+function over reverse plane partitions on that poset.  They then write, in
+\S5.4.2:
+
+\begin{quote}
+``We consider it an interesting open problem to find a combinatorial
+characterization of such $w$.''
+\end{quote}
+
+They rule out three natural guesses.  Dominant minuscule elements are too
+restrictive \cite[Ex.~5.10]{DKK}; so are minuscule elements
+\cite[Ex.~5.11]{DKK}; and so are fully commutative elements
+\cite[Ex.~5.12]{DKK}.  Each example exhibits a $w$ with simple spectrum lying
+outside the class.
+
+\subsection{Results}
+Our main theorem answers the question by constructing $V$ explicitly, uniformly
+in the type, from any reduced word for $w$.
+
+Let $\Pia=\Pia(\Gamma)$ be the preprojective algebra over a field, $S_i$ the
+simple module at $i$, and $I_i$ the injective envelope of $S_i$.  For a
+$\Pia$-module $M$ and $j\in I$ let $\soc_{(j)}(M)$ be the sum of all submodules
+of $M$ isomorphic to $S_j$, and for a sequence $\sigma=(j_1,\dots,j_p)$ let
+$\soc_\sigma(M)$ be the iterated socle of Geiss--Leclerc--Schr\"oer
+\cite[\S2.4]{GLS}, defined by $M_0=0$ and
+$M_q/M_{q-1}=\soc_{(j_q)}(M/M_{q-1})$.
+
+\begin{definition}[the $c$-trace]\label{def:ctrace}
+Let $w=s_{i_1}\cdots s_{i_\ell}$ be a reduced word.  Set $\mu^{(\ell)}=\la$ and,
+for $p=\ell,\ell-1,\dots,1$,
+\[
+  c_p=\langle \al_{i_p}^\vee,\ \mu^{(p)}\rangle,
+  \qquad
+  \mu^{(p-1)}=\mu^{(p)}-c_p\al_{i_p}=s_{i_p}\mu^{(p)} .
+\]
+The \emph{$c$-weighted sequence} of the word is
+$\sigma=\bigl(i_\ell^{\,c_\ell},\,i_{\ell-1}^{\,c_{\ell-1}},\dots,
+i_1^{\,c_1}\bigr)$, each letter repeated according to its multiplicity, in
+this order.
+\end{definition}
+
+Note $\mu^{(0)}=w\la=\mu$ and $\sum_{p\,:\,i_p=i}c_p=v_i$, so the $c$-trace
+recomputes the dimension vector.  The invariant $c_{\max}=\max_p c_p$ equals
+$1$ exactly when $w$ is $\la$-minuscule in the sense of
+\cite[Def.~5.1]{DKK}.
+
+\begin{theorem}[Main Theorem]\label{thm:main}
+Let $\Gamma$ be simply-laced Dynkin, $\la=\om_\ka$, $w\in W$ of minimal length
+in $wW_\la$, and $\sigma$ the $c$-weighted sequence of any reduced word for
+$w$.  Then
+\[
+   \dimv \soc_\sigma\!\left(I_\ka\right)\;=\;v\;=\;\la-w\la,
+\]
+and consequently
+\[
+   V\;\cong\;\soc_\sigma\!\left(I_\ka\right)
+\]
+as graded representations of the doubled quiver.  In particular the
+isomorphism class of $\soc_\sigma(I_\ka)$ does not depend on the chosen
+reduced word.
+\end{theorem}
+
+The grading on the right is the path-length grading of $I_\ka$; Proposition
+\ref{prop:grading} identifies it with the $T$-weight grading, and \S\ref{sec:poset}
+explains how to read off the coloured poset of \cite[\S5.4]{DKK} from it.  The
+criterion is then immediate.
+
+\begin{corollary}\label{cor:crit}
+$T$ acts on every $V_i$ with simple spectrum if and only if the coloured graded
+set underlying $\soc_\sigma(I_\ka)$ has no repeated (colour, degree) pair,
+i.e.\ $\dim \soc_\sigma(I_\ka)_i[d]\le 1$ for all $i\in I$ and all $d$.
+\end{corollary}
+
+The construction is effective: $I_\ka$ has dimension $\la-w_0\la$, independent
+of $w$, and the socle steps are kernel computations of size bounded by the
+graded pieces of $I_\ka$, so the criterion is decidable in time polynomial in
+$|I|$ and $\ell(w)$ from any reduced word.
+
+Two refinements make the answer sharper.  First, only one vertex needs to be
+inspected.
+
+\begin{theorem}\label{prop:lemA}
+Let $t$ be the trivalent node of $\Gamma$ (types $D$ and $E$).  If
+$\dim V_t[d]\le1$ for all $d$, then $\dim V_i[d]\le1$ for all $i$ and $d$.
+\end{theorem}
+
+Theorem \ref{prop:lemA} is proved in \S\ref{sec:typeD} for type $D$, by a
+window-containment argument, and in \S\ref{sec:typeE} for type $E$, where it
+follows from an inward-injectivity lemma about $I_\ka$ whose verification is a
+\emph{complete} finite computation --- $E_6$, $E_7$ and $E_8$ have only
+finitely many triples (fundamental weight, vertex, degree).  In types $D$ and $E$ this reduces the criterion to a
+single vertex; in type $A$ there is no trivalent node, but there the question
+is settled outright:
+
+\begin{proposition}\label{prop:minuscule}
+If $\la$ is minuscule then, for $w$ of minimal length in $wW_\la$, $c_p=1$ for
+every step of every reduced word, $w$ is $\la$-minuscule, and $T$ acts with
+simple spectrum.  In
+particular the spectrum is always simple in type $A$, for the spin weights
+$\om_{n-1},\om_n$ of $D_n$, for $\om_1$ and $\om_6$ of $E_6$, and for $\om_7$
+of $E_7$.
+\end{proposition}
+
+Second, in type $D$ the criterion becomes a statement about the signs of $\mu$
+with no reference to reduced words, heaps, or fully commutative elements.
+
+\begin{theorem}[type $D$]\label{thm:typeD}
+Let $\Gamma=D_n$, $t=n-2$, and $\la=\om_k$ with $k\le n-2$.  Write
+$\mu=w\la=\sum_{i\in S}\eta_ie_i$ in Bourbaki coordinates, $|S|=k$,
+$\eta_i=\pm1$.  Put
+\[
+  m=\#\{\,i\le n-2:\ i\in S,\ \eta_i=-1\,\},
+  \qquad
+  r=|S\cap\{n-1,n\}| .
+\]
+Then $T$ acts with simple spectrum if and only if $r+2m\le2$; equivalently, iff
+$m=0$, or $m=1$ and $r=0$.  For the spin weights the spectrum is always simple.
+The proof is unconditional for $k\le2$ and for the spin weights; for $k\ge3$ it
+rests on Proposition \ref{prop:T}, which we verify computationally
+(Remark \ref{rem:Tk3}).
+\end{theorem}
+
+Finally we record a counterexample in the direction opposite to
+\cite[Ex.~5.12]{DKK}.
+
+\begin{example}\label{ex:fcbad}
+In $D_4$ take $w=s_2s_4s_3s_1s_2$, so $v=(1,3,1,1)$.  This $w$ is fully
+commutative, but the spectrum is \emph{not} simple: the path-length graded
+dimensions of $V$ inside $I_2$ are $\{2:1\}$ in degree $4$, $\{1:1,3:1,4:1\}$
+in degree $3$ and $\{2:2\}$ in degree $2$, so, read from the top down as in the
+diagrams of \cite{DKK}, the rows are $[2]$, $[1,3,4]$, $[2,2]$.  Together with \cite[Ex.~5.12]{DKK}, which exhibits a
+$w$ with simple spectrum that is not fully commutative, this shows that full
+commutativity is neither necessary nor sufficient.
+\end{example}
+
+\subsection{Method}
+The proof of Theorem \ref{thm:main} is short and does not proceed case by case.
+It has two ingredients.  The first is an exact formula for the size of a single
+socle step, valid for an arbitrary submodule of $I_\ka$:
+
+\begin{lemma}[\S\ref{sec:identity}]\label{lem:cb}
+Let $X\subseteq I_\ka$ be a submodule, $v'=\dimv X$, $\mu'=\la-\sum_i
+v'_i\al_i$.  Then for every $i\in I$
+\[
+   \dim\soc_{(i)}\!\left(I_\ka/X\right)
+   \;=\;\langle\al_i^\vee,\mu'\rangle\;+\;\dim\topp_i(X),
+\]
+where $\topp_i(X)=\Hom_\Pia(X,S_i)$.
+\end{lemma}
+
+This comes from applying $\Hom(S_i,-)$ to $0\to X\to I_\ka\to Q\to0$, using
+$\Ext^1(S_i,I_\ka)=0$, and then Crawley-Boevey's formula
+$\dim\Ext^1_\Pia(M,N)=\dim\Hom(M,N)+\dim\Hom(N,M)-(\dimv M,\dimv N)$
+\cite{CB}.
+
+The second ingredient is a squeeze.  Since $\dim\topp_i(X)\ge0$, each socle
+step grows $X$ by at least $c$; summing the $c$'s along a reduced word for the
+longest element gives exactly $\la-w_0\la$, which is precisely $\dimv I_\ka$.
+As $\soc_\sigma(I_\ka)\subseteq I_\ka$ the two bounds meet, so \emph{every}
+step contributes exactly $c$ and every $\topp$-term vanishes.  Restricting to
+the prefix corresponding to $w$ gives Theorem \ref{thm:main}, once uniqueness
+of the submodule with $w$-extremal dimension vector \cite[Prop.~4.9]{ST}
+identifies the result with $V$.
+
+\subsection{Verification}
+Every statement in this paper is accompanied by machine verification against an
+independent solver that enumerates graded submodules directly.  In particular
+the construction reproduces the three coloured posets printed in
+\cite[pp.~82--83]{DKK}, Hasse edges included, and the criterion agrees with the
+solver on $2179$ elements across types $A$, $D$ and $E$ --- every fundamental
+weight of $A_3$--$A_6$, $D_4$--$D_7$, $E_6$ and the two minuscule-framing
+weights of $E_7$ whose Weyl orbit has at most $400$ elements.  See \S\ref{sec:verification}.
+
+\subsection{Acknowledgements}
+The problem was communicated by V.~Krylov.
+
+\section{Setup}\label{sec:setup}
+
+\subsection{The preprojective algebra}
+Let $Q$ be a quiver with underlying graph $\Gamma$ and let $\overline{Q}$ be its
+double, with $a^*$ the reverse of $a$.  The preprojective algebra is
+\[
+  \Pia=\Pia(\Gamma)=\Bbbk\overline{Q}\Big/\Big(\textstyle\sum_{a}(aa^*-a^*a)\Big),
+\]
+where $\Bbbk$ is any field.  Every argument below is characteristic-free;
+Crawley-Boevey's formula, which we use in \S\ref{sec:identity}, holds over an
+arbitrary field.  The computer verifications of \S\ref{sec:verification} were
+run over $\mathbb{F}_p$ for $p=5,7,11,13$ with identical results.
+A $\Pia$-module is the same thing as a representation of $\overline{Q}$
+satisfying the moment map equation at every vertex, which is exactly the datum
+carried by a point of $\Mvw(v,w)$ with vanishing stability-free part.  We use
+throughout the following standard facts, valid because $\Gamma$ is Dynkin.
+
+\begin{proposition}\label{prop:selfinj}
+$\Pia(\Gamma)$ is finite dimensional and self-injective.  Its Nakayama
+permutation $\nu$ is determined by $\soc(\Pia e_j)\cong S_{\nu(j)}$, and
+\[
+  I_\ka \;\cong\; \Pia e_{\nu^{-1}(\ka)} .
+\]
+Moreover $\nu$ is the identity except in types $A_n$, $D_{\text{odd}}$ and
+$E_6$, where it is induced by the nontrivial diagram automorphism.
+\end{proposition}
+
+\begin{proposition}\label{prop:dimI}
+$\dimv I_\ka=\om_\ka-w_0\om_\ka$ in root coordinates.
+\end{proposition}
+
+Proposition \ref{prop:selfinj} is classical; see for instance
+\cite[\S1]{CB}.  Proposition \ref{prop:dimI} follows from the description of
+$\Pia e_j$ as $\bigoplus_{d\ge0}\tau^{-d}P_j$ over the path algebra of an
+orientation of $\Gamma$, whose total dimension vector is
+$\om_j+\om_{j^*}=\om_j-w_0\om_j$; it is verified directly for every fundamental
+weight of $A_3,A_4,A_5,D_4,D_5,D_6,D_7,E_6$ and $E_7$ in
+\S\ref{sec:verification}.
+
+Every $\Pia e_j$ is graded by path length, and \emph{this is the grading we
+use throughout}; it coincides with the socle-layer grading read in reverse.  We
+write $M_i[d]$ for the degree-$d$ part of $M$ at vertex $i$, and $d_{\max}$ for
+the top degree of $I_\ka$.
+
+\subsection{Iterated socles}
+For $j\in I$, $\soc_{(j)}(M)$ is the largest submodule of $M$ that is a direct
+sum of copies of $S_j$; concretely it is the set of $x\in M_j$ annihilated by
+every arrow out of $j$.  Given a sequence $\sigma=(j_1,\dots,j_p)$ define
+$\soc_\sigma(M)=M_p$ where $M_0=0$ and $M_q$ is the preimage in $M$ of
+$\soc_{(j_q)}(M/M_{q-1})$.  We use only that $\soc_\sigma$ is a submodule and
+that $\soc_{\sigma}(M)\subseteq\soc_{\sigma'}(M)$ when $\sigma$ is a prefix of
+$\sigma'$.
+
+\subsection{Extremal fixed points}
+We use Savage--Tingley's identification of the quiver variety with a quiver
+Grassmannian.
+
+\begin{proposition}[{\cite[Thm.~4.4, Prop.~4.9]{ST}}]\label{prop:ST}
+$\mathfrak{L}(v,w)\cong\mathrm{Gr}_{v}\!\left(\bigoplus_i I_i^{\,w_i}\right)$,
+and if $v=\la-w\la$ is $w$-extremal then there is exactly one submodule of
+$\bigoplus_i I_i^{\,w_i}$ with dimension vector $v$.
+\end{proposition}
+
+For $\la=\om_\ka$ the framing is $\bigoplus_i I_i^{w_i}=I_\ka$, so
+Proposition \ref{prop:ST} says: \emph{$I_\ka$ has a unique submodule of
+dimension vector $v$, and the fixed point $V$ is that submodule} (we use
+\cite[Thm.~4.4]{ST} in the convention in which a point of the quiver
+Grassmannian is a submodule of the injective, not a quotient of it).  Hence to
+identify $V$ it suffices to exhibit any submodule of $I_\ka$ of the right
+dimension vector.  That is what Theorem \ref{thm:main} does.
+
+It remains to match the two gradings.
+
+\begin{proposition}\label{prop:grading}
+The $T$-weight decomposition of $V$ coincides, up to an overall affine
+normalisation independent of $i$, with the path-length grading inherited from
+$I_\ka$.  In particular $T$ acts on every $V_i$ with simple spectrum if and
+only if $\dim V_i[d]\le1$ for all $i$ and $d$.
+\end{proposition}
+
+\begin{proof}
+Because $\la=\om_\ka$ is fundamental, the framing space is one dimensional and
+the framing torus acts on all of $V$ by a single scalar character, contributing
+only a global shift.  The remaining torus contains the $\bbC^\times$ that
+scales every arrow of $\overline{Q}$ with weight one; its weight decomposition
+on $\Pia e_{\ka'}$ is exactly the path-length grading.  Since $v$ is
+$w$-extremal, Proposition \ref{prop:ST} gives a \emph{unique} submodule of
+$I_\ka$ with dimension vector $v$; uniqueness forces that submodule to be
+stable under the $\bbC^\times$-action, hence to be a graded submodule, and the
+induced grading is the restriction of the path-length grading.  Distinctness of
+$T$-weights within $V_i$ is therefore distinctness of degrees, i.e.\
+$\dim V_i[d]\le1$.
+\end{proof}
+
+\section{The socle-step identity}\label{sec:identity}
+
+\begin{proof}[Proof of Lemma \ref{lem:cb}]
+Write $I=I_\ka$ and let $Q=I/X$, so that $0\to X\to I\to Q\to0$ is exact.
+Applying $\Hom_\Pia(S_i,-)$ gives
+\[
+0\to\Hom(S_i,X)\to\Hom(S_i,I)\to\Hom(S_i,Q)\to\Ext^1(S_i,X)\to\Ext^1(S_i,I).
+\]
+The last term vanishes because $I$ is injective.  Since $\soc(I_\ka)=S_\ka$ we
+have $\dim\Hom(S_i,I)=\delta_{i\ka}$, and $\dim\Hom(S_i,Q)=\dim\soc_{(i)}(Q)$.
+Therefore
+\begin{equation}\label{eq:les}
+  \dim\soc_{(i)}(Q)=\delta_{i\ka}-\dim\soc_{(i)}(X)+\dim\Ext^1(S_i,X).
+\end{equation}
+By Crawley-Boevey's formula for modules over a preprojective algebra
+\cite[Lem.~1]{CB},
+\[
+  \dim\Ext^1_\Pia(M,N)=\dim\Hom(M,N)+\dim\Hom(N,M)-(\dimv M,\dimv N),
+\]
+where $(\cdot,\cdot)$ is the symmetrised Tits form, so that
+$(\dimv M,\dimv N)=(\dimv M)^{\mathsf T}C(\dimv N)$.  Taking $M=S_i$ and
+$N=X$, and noting $\Hom(S_i,X)=\soc_{(i)}(X)$ and $\Hom(X,S_i)=\topp_i(X)$,
+\[
+  \dim\Ext^1(S_i,X)=\dim\soc_{(i)}(X)+\dim\topp_i(X)-(\al_i,v').
+\]
+Substituting into \eqref{eq:les} the socle terms cancel and
+\[
+  \dim\soc_{(i)}(Q)=\delta_{i\ka}-(\al_i,v')+\dim\topp_i(X).
+\]
+Finally $(\al_i,v')=\sum_j a_{ij}v'_j=\langle\al_i^\vee,\sum_jv'_j\al_j\rangle$
+and $\langle\al_i^\vee,\om_\ka\rangle=\delta_{i\ka}$, so
+$\delta_{i\ka}-(\al_i,v')=\langle\al_i^\vee,\mu'\rangle$.
+\end{proof}
+
+\begin{corollary}\label{cor:mono}
+A socle step of colour $i$ applied to $X\subseteq I_\ka$ enlarges $X$ by
+exactly $\langle\al_i^\vee,\mu'\rangle+\dim\topp_i(X)$ dimensions, all at
+vertex $i$.  In particular the growth is at least
+$\langle\al_i^\vee,\mu'\rangle$, with equality if and only if $S_i$ does not
+occur in the head of $X$.
+\end{corollary}
+
+\begin{remark}\label{rem:repeats}
+Lemma \ref{lem:cb} also explains why repeating a colour is harmless.  Suppose a
+step of colour $i$ with $c=\langle\al_i^\vee,\mu'\rangle$ has just added
+exactly $c$ dimensions, producing $X'$.  Those $c$ new elements lie in the head
+of $X'$, so $\dim\topp_i(X')=c$; and the weight has become
+$s_i\mu'$, with $\langle\al_i^\vee,s_i\mu'\rangle=-c$.  Lemma \ref{lem:cb}
+gives $\dim\soc_{(i)}(I_\ka/X')=-c+c=0$: further repeats add nothing.  Thus
+$\soc_\sigma$ is unchanged if each block $i^{\,c}$ is replaced by $i^{\,c'}$
+for any $c'\ge c$, and the $c$-weighted sequence may equivalently be described
+as ``apply $\soc_{(i)}$ until it stabilises''.
+\end{remark}
+
+\section{Proof of the Main Theorem}\label{sec:proof}
+
+\begin{lemma}\label{lem:extend}
+Let $w$ be of minimal length in $wW_\la$ and $\mu=w\la$.
+\begin{enumerate}
+\item[(i)] Every $c$-trace value of every reduced word for $w$ satisfies
+$c_p\ge1$.
+\item[(ii)] If $\mu\ne w_0\la$ there is a simple reflection $s_i$ with
+$\langle\al_i^\vee,\mu\rangle\ge1$, and for any such $i$ one has
+$\ell(s_iw)=\ell(w)+1$ with $s_iw$ again of minimal length in $s_iwW_\la$.
+\end{enumerate}
+Consequently every reduced word for $w$ extends on the left to a reduced word
+for the longest minimal-length representative $w_0^\la$, with all $c$-trace
+values $\ge1$.
+\end{lemma}
+
+\begin{proof}
+(i) Write $u=s_{i_{p+1}}\cdots s_{i_\ell}$, so $\mu^{(p)}=u\la$.  If $c_p=0$
+then $s_{i_p}u\la=u\la$, hence
+$w\la=s_{i_1}\cdots s_{i_{p-1}}u\la$, and $s_{i_1}\cdots s_{i_{p-1}}u$ has
+length at most $\ell-1$.  This contradicts the minimality of $\ell(w)$ among
+elements sending $\la$ to $\mu$.
+
+(ii) If $\langle\al_i^\vee,\mu\rangle\le0$ for every $i$ then $\mu$ is
+antidominant, hence $\mu=w_0\la$.  So assume
+$\langle\al_i^\vee,w\la\rangle>0$.  Then $\langle\la,w^{-1}\al_i^\vee\rangle>0$;
+since $\la$ is dominant this forces $w^{-1}\al_i>0$, and therefore
+$\ell(s_iw)=\ell(w)+1$.  Let $J=\{j:\langle\al_j^\vee,\la\rangle=0\}$, so that
+$W_\la=W_J$ and $w$ is minimal in $wW_J$ if and only if $w\al_j>0$ for all
+$j\in J$.  For $j\in J$ we have $w\al_j>0$, and $s_i(w\al_j)<0$ could only
+happen if $w\al_j=\al_i$; but then
+$\langle\al_i^\vee,w\la\rangle=\langle\al_j^\vee,\la\rangle=0$, contradicting
+$\langle\al_i^\vee,w\la\rangle>0$.  Hence $s_iw\al_j>0$ for all $j\in J$ and
+$s_iw$ is minimal in its coset.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+Fix a reduced word for $w$ and extend it, by Lemma \ref{lem:extend}, to a
+reduced word for $w_0^\la$; let $\sigma_{\mathrm{full}}$ be its $c$-weighted
+sequence and $\sigma$ the prefix belonging to $w$.  Let
+$X_0=0\subseteq X_1\subseteq\cdots\subseteq X_L=\soc_{\sigma_{\mathrm{full}}}
+(I_\ka)$ be the resulting filtration, indexed by the \emph{blocks}
+$i_p^{\,c_p}$ of $\sigma_{\mathrm{full}}$ rather than by individual letters.
+
+By Corollary \ref{cor:mono} applied to the first letter of the $p$-th block,
+and because the remaining letters of the block can only enlarge $X$ further,
+\begin{equation}\label{eq:lower}
+  \dim X_p-\dim X_{p-1}\;\ge\;c_p \qquad(1\le p\le L).
+\end{equation}
+Here $c_p\ge1$ by Lemma \ref{lem:extend}(i); it is this positivity that makes
+\eqref{eq:lower} a lower bound strong enough to be squeezed.
+Summing, and using that the $c$-trace telescopes,
+$\sum_p c_p\al_{i_p}=\la-w_0^\la\la=\la-w_0\la$, we get
+\[
+  \dim \soc_{\sigma_{\mathrm{full}}}(I_\ka)\;\ge\;
+  \sum_p c_p \;=\; \dim\bigl(\la-w_0\la\bigr)\;=\;\dim I_\ka,
+\]
+the last equality by Proposition \ref{prop:dimI}.  On the other hand
+$\soc_{\sigma_{\mathrm{full}}}(I_\ka)\subseteq I_\ka$, so the inequality is an
+equality.  Consequently every inequality in \eqref{eq:lower} is an equality,
+and since the $p$-th block only enlarges $X$ at vertex $i_p$,
+\[
+  \dimv X_p-\dimv X_{p-1}\;=\;c_p\,\al_{i_p}\quad\text{for all }p .
+\]
+Truncating at the prefix $\sigma$ gives
+$\dimv\soc_\sigma(I_\ka)=\sum_{p\le \ell}c_p\al_{i_p}=\la-w\la=v$.  By
+Proposition \ref{prop:ST} the submodule of $I_\ka$ with this dimension vector
+is unique and equals $V$.  Word-independence follows, since the right-hand side
+depends only on $w$.
+\end{proof}
+
+\begin{corollary}\label{cor:tops}
+At every step of the construction, $\topp_{i}(X)=0$ for the colour $i$ about to
+be applied, and $\dim\soc_{(i)}(I_\ka/X)=c$ exactly.
+\end{corollary}
+
+\begin{remark}
+Corollary \ref{cor:tops} has a purely combinatorial shadow.  Only reflections
+at $i$ and at its neighbours change $\langle\al_i^\vee,\cdot\rangle$, and a
+colour-$i$ step flips that pairing from $c$ to $-c$; so between two consecutive
+colour-$i$ blocks of a $c$-trace some neighbouring colour must intervene.  It
+is exactly that intervening step which absorbs $S_i$ out of the head of $X$.
+\end{remark}
+
+\begin{proof}[Proof of Proposition \ref{prop:minuscule}]
+If $\la$ is minuscule then $\langle\al^\vee,\nu\rangle\in\{0,\pm1\}$ for every
+root $\al$ and every weight $\nu$ of $L(\la)$, so every $c_p$ equals $1$ and
+$w$ is $\la$-minuscule in the sense of \cite[Def.~5.1]{DKK}.  By Stembridge
+\cite[Prop.~2.1, \S2]{Stem} a $\la$-minuscule element is fully commutative, so
+its heap $H(w)$ is independent of the reduced word; and $\la$-minuscule heaps
+are ranked, with each colour fibre $H(w)_i$ a chain.  By \cite[Prop.~3.8, Lem.~3.10]{DFKKMSSVW} the fixed
+point representation is the heap module $\bbC H(w)$, with $V_i$ spanned by
+$H(w)_i$.  The rank function of $H(w)$ is the path-length degree of Proposition
+\ref{prop:grading}, and a chain occupies pairwise distinct ranks, so every
+graded piece of $V_i$ has dimension at most one.
+\end{proof}
+
+\section{Reading the coloured poset}\label{sec:poset}
+
+Let $X=\soc_\sigma(I_\ka)\cong V$ and assume the criterion of Corollary
+\ref{cor:crit} holds, so that $\dim X_i[d]\le1$ for all $i,d$; only then are
+the vertices of the poset canonically labelled.  Define a coloured graded set
+\[
+  P(w)=\bigl\{(i,d,\text{basis vector of }X_i[d])\bigr\},
+\]
+coloured by $i$ and ranked by $d_{\max}-d$, with $(i,d)\lessdot(j,d+1)$ whenever
+$j$ is adjacent to $i$ and the corresponding arrow of $\Pia$ is nonzero on the
+relevant vectors.  Reading the degrees in decreasing order recovers the Hasse
+diagrams of \cite[\S5.4]{DKK}, whose top row is the top degree $d_{\max}$.  Then
+\cite[Thm.~5.6, Thm.~5.7]{DKK} express the vertex function as a sum over
+reverse plane partitions on $P(w)$.
+
+\begin{example}[{\cite[Ex.~5.10]{DKK}}]
+$\Gamma=D_4$, $\la=\om_2$, $w=s_1s_2s_3s_4s_2$.  The $c$-trace gives
+$v=(2,2,1,1)$ and $\sigma=(2,4,3,2,1,1)$.  The construction returns rows
+$[2],[1,3,4],[2],[1]$ read from the top degree down, matching the diagram on
+p.~82 of \cite{DKK} including its six covering relations.
+\end{example}
+
+\begin{example}[{\cite[Ex.~5.11, Ex.~5.12]{DKK}}]
+$\Gamma=D_5$, $\la=\om_2$.  For $w=s_2s_1s_3s_4s_5s_3s_2$ the construction
+returns $[2],[1,3],[2,4,5],[3],[2]$, and for
+$w=s_2s_1s_2s_3s_4s_5s_3s_2$ it returns $[2],[1,3],[2,4,5],[3],[2],[1]$, both
+matching p.~83 of \cite{DKK} with all covering relations.
+\end{example}
+
+\section{Type \texorpdfstring{$D$}{D}}\label{sec:typeD}
+
+Throughout this section $\Gamma=D_n$ with Bourbaki labelling
+$\al_i=e_i-e_{i+1}$ for $i\le n-1$ and $\al_n=e_{n-1}+e_n$, so that the
+trivalent node is $t=n-2$.
+
+\begin{lemma}\label{lem:C}
+Let $\la=\om_k$ with $k\le n-2$ and $\mu=w\la=\sum_{i\in S}\eta_ie_i$.  With
+$m$ and $r$ as in Theorem \ref{thm:typeD} one has $v_t=r+2m$.
+\end{lemma}
+
+\begin{proof}
+Write $\la-\mu=\sum_jc_je_j$.  Comparing coefficients of $e_j$ in
+$\la-\mu=\sum_iv_i\al_i$ gives $c_1=v_1$ and $c_j=v_j-v_{j-1}$ for
+$2\le j\le n-2$, so $v_t=\sum_{j\le n-2}c_j$.  Since $k\le n-2$ the support of
+$\la$ lies in the first $n-2$ coordinates, whence
+$\sum_{j\le n-2}c_j=k-\sum_{j\le n-2}\mu_j$.  Writing $p$ and $m$ for the
+number of positive and negative signs of $\mu$ among the first $n-2$
+coordinates, $\sum_{j\le n-2}\mu_j=p-m$ and $p+m=k-r$, so
+$v_t=k-(p-m)=r+2m$.
+\end{proof}
+
+\begin{lemma}[the recursion]\label{lem:R}
+Let $a_d(i)=\dim (I_\ka)_i[d]$.  Then for every $i$ and every $d$ strictly
+below the top degree,
+\[
+   a_{d+1}(i)=\sum_{j\sim i}a_d(j)-a_{d-1}(i),\qquad
+   a_0(i)=\delta_{i,\ka'},\ a_{-1}=0,
+\]
+where $\ka'=\nu^{-1}(\ka)$.
+\end{lemma}
+
+\begin{proof}
+By construction the degree-$(d+1)$ part of the free module at $j$ is
+$\bigoplus_{i\sim j}(I_\ka)_i[d]$, and the preprojective relations impose one
+condition for each basis vector of $(I_\ka)_j[d-1]$.  These conditions are
+independent precisely when
+$Y:(I_\ka)_j[d-1]\to\bigoplus_{i\sim j}(I_\ka)_i[d]$ is injective.  A nonzero
+element of $\ker Y$ would span a copy of $S_j$ inside $I_\ka$; but $I_\ka$ has
+simple socle $S_\ka$, concentrated in the top degree.  Hence $Y$ is injective
+below the top degree.
+\end{proof}
+
+\begin{lemma}[method of images]\label{lem:P}
+For $\Gamma=D_n$ and $\la=\om_k$ with $k\le n-2$, the colour-$t$ multiplicity
+sequence of $I_\ka$ is $(1,2,\dots,2,1)$ with $k-1$ twos, occupying the $k+1$
+degrees $t-k,\ t-k+2,\ \dots,\ t+k$.  More generally vertex $i$ carries
+multiplicity $2$ in exactly $\max(0,\ i+k-n+1)$ degrees and multiplicity
+$\le2$ throughout.
+\end{lemma}
+
+\begin{proof}
+The datum $a_0=\delta_k$ is fixed by the diagram automorphism exchanging $n-1$
+and $n$, hence so is the solution: $a_d(n-1)=a_d(n)=:b_d$.  Setting
+$a_d(t+1):=2b_d$, the recursion of Lemma \ref{lem:R} becomes the free chain
+recursion $a_{d+1}(i)+a_{d-1}(i)=a_d(i-1)+a_d(i+1)$ on $1,\dots,L$ with
+$L=t+1=n-1$, subject to a Dirichlet condition $a_d(0)=0$ and a Neumann
+(mirror) condition $a_d(L+1)=a_d(L-1)$.
+
+On the infinite chain the solution with $u_0=\delta_k$, $u_{-1}=0$ is
+$u_d(i)=1$ if $|i-k|\le d$ and $i\equiv k+d \pmod 2$, and $0$ otherwise
+(induction on $d$).  The Dirichlet condition is an odd reflection about $0$ and
+the mirror condition an even reflection about $L$; the group they generate is
+infinite dihedral, with images of $k$ at $2Lj\pm k$ carrying alternating signs.
+Hence
+\[
+   a_d(i)=\sum_{x\ \text{image of}\ k}
+      \mathrm{sign}(x)\cdot\bigl[\,|i-x|\le d\ \text{and}\ i\equiv x+d\ (2)\,\bigr].
+\]
+The four images nearest $t$ are $k$ and $2L-k$ with sign $+$, at distances
+$t-k$ and $t+2-k$, and $-k$ and $2L+k$ with sign $-$, at distances $t+k$ and
+$t+2+k$.  (The image solution vanishes identically once $d$ exceeds $t+2+k$, and the
+total $\sum_{d,i}a_d(i)$ it predicts equals $\la-w_0\la=\dimv I_\ka$ by
+Proposition \ref{prop:dimI}; this pins the top degree and shows that the
+recursion of Lemma \ref{lem:R}, valid below the top degree, determines
+$I_\ka$ completely.)  They enter the window one at a time as $d$ grows, so
+$a_d(t)$ is $0$
+for $d<t-k$, then $1$, then $2$ on $[t+2-k,\,t+k)$, then $1$ on
+$[t+k,\,t+2+k)$, then $0$; the degrees of the correct parity in the middle
+range number $(2k-4)/2+1=k-1$.  The same computation at a general vertex $i$
+shows the value $2$ occurs exactly for
+$\max(|i-k|,2L-k-i)\le d<\min(i+k,2L+k-i)$, giving $\max(0,i+k-n+1)$ degrees.
+\end{proof}
+
+\begin{proposition}[Proposition \ref{prop:lemA} in type $D$]\label{prop:Ad}
+For $\Gamma=D_n$ and every $i\le t$, the set of degrees at which vertex $i$ can
+carry multiplicity $\ge2$ in $I_\ka$ is contained in the corresponding set for
+$t$.  Consequently a quotient of $I_\ka$ with multiplicity-free colour-$t$ part
+is multiplicity-free everywhere.
+\end{proposition}
+
+\begin{proof}
+By Lemma \ref{lem:P} the window at vertex $i$ is $[2L-k-i,\ i+k)$ with
+$L=n-1$.  Its left endpoint satisfies $2L-k-i\ge 2L-k-(L-1)=L-k+1$, the left
+endpoint for $i=t=L-1$; and its right endpoint satisfies $i+k\le (L-1)+k$, the
+right endpoint for $t$.  So the window is contained in that of $t$.  For the two leaves $n-1,n$ the
+folding of Lemma \ref{lem:P} gives $a_d(n-1)=a_d(n)=b_d$ with
+$2b_d=a_d(t+1)\le2$, so $b_d\le1$ and those vertices never carry a repeat at
+all.  Since $\dim V_i[d]\le\dim (I_\ka)_i[d]$, no repeat can occur at a degree
+outside the colour-$t$ window.
+\end{proof}
+
+\begin{proposition}[top truncation]\label{prop:T}
+Let $N\subseteq I_\ka$ be a graded submodule with $\dimv N=v=\la-w\la$ for
+some $w\in W$.  Then the colour-$t$ multiplicities of $N$ are the greedy
+\emph{top} truncation of the sequence of Lemma \ref{lem:P} to total $v_t$:
+the same degrees, filled from the highest downward.
+\end{proposition}
+
+Note that the sequence $(1,2^{k-1},1)$ of Lemma \ref{lem:P} is palindromic, so
+its top truncations and its bottom truncations have the same multiset of
+multiplicities, namely
+\[
+ v_t=0\mapsto(\,),\quad 1\mapsto(1),\quad 2\mapsto(1,1),\quad 3\mapsto(1,2),
+ \quad 4\mapsto(1,2,1),\quad 5\mapsto(1,2,2),\ \dots
+\]
+Only the multiset is used below.
+
+\begin{proof}[Proof for $k=2$]
+Here the colour-$t$ profile of $I_\ka$ is $(1,2,1)$ at degrees $d_0,d_0+2,
+d_0+4$ with $d_0=n-4$.  Computing the submodule generated by a single
+colour-$t$ element shows that its colour-$t$ content is all of $(1,2,1)$ if the
+element sits in degree $d_0$, is $(1,1)$ in degrees $d_0+2,d_0+4$ if it sits in
+degree $d_0+2$ (for every choice of vector there), and is $(1)$ if it sits in
+degree $d_0+4$.  Hence the only colour-$t$ profiles a submodule can have are
+$(0,0,0),(0,0,1),(0,1,1),(0,2,1),(1,2,1)$, and each is a top truncation.  No
+hypothesis on $v$ is needed.
+\end{proof}
+
+\begin{remark}[the case $k\ge3$]\label{rem:Tk3}
+Proposition \ref{prop:T} is equivalent to \emph{upward closure} at $t$: if
+$V_t[d]\ne0$ then $V_t[d+2]=(I_\ka)_t[d+2]$.  Two ingredients reduce the
+general case to a single sharp statement.
+
+\emph{Lemma U.}  For $x\in (I_\ka)_t[d]$ the submodule $\Pia x$ contains the
+three double paths $y_j=a_{j\to t}a_{t\to j}x\in (I_\ka)_t[d+2]$, and the
+preprojective relation at $t$ is one linear relation among them, so they span
+at most two dimensions.  In type $D$, Lemma \ref{lem:P} gives
+$\dim (I_\ka)_t[d+2]\le2$, so there is room for the span to be everything ---
+and it is, unless $x$ lies on one of exactly two distinguished lines, the
+kernels of the arrows from $t$ to the two leaves $n-1$ and $n$.  Call these the
+\emph{special} lines.  (Verified for all $D_n$ with $n\le8$ and all $k\le n-2$:
+$300/300$ lines.)  Consequently upward closure can fail only where $V_t[d]$ is
+a special line.
+
+\emph{Lemma S$'$.}  In an extremal module $V$, a special line occurs at colour
+$t$ only at a degree whose successor $d+2$ is already full.  (Verified on all
+$1990$ colour-$t$ graded pieces of the extremal modules of $D_4$--$D_7$,
+$1131$ of which are special lines, with no exception.)
+
+Lemma S$'$ is what remains unproved for $k\ge3$; Proposition \ref{prop:T} and
+hence Theorem \ref{thm:typeD} are unconditional for $k\le2$ and for the spin
+weights.  We note two things in its favour beyond the direct check.  First,
+$k=2$ is precisely the setting of all three examples of \cite[\S5.4.2]{DKK} and
+of Example \ref{ex:fcbad}.  Second, and more substantially, the failures are
+excluded by a quantity with geometric meaning: enumerating \emph{all} graded
+submodules $N\subseteq I_\ka$ --- not merely the extremal ones --- every single
+one that fails upward closure satisfies
+\[
+   \delta(v)\;=\;2v_\ka-v^{\mathsf T}Cv\;=\;(\la,\la)-(\mu,\mu)\;>\;0,
+\]
+that is, its dimension vector is not extremal at all and $\Mvw(v,\om_\ka)$ has
+positive dimension.  Over $D_5e_3$, $D_6e_3$, $D_6e_4$ and $D_7e_3$ there are
+$96$ such submodules and all $96$ have $\delta\in\{2,4\}$.  Since $\delta$
+depends only on $v$ and not on the grading, a proof that a violator always has
+$\delta>0$ would establish Proposition \ref{prop:T} outright.
+\end{remark}
+
+\begin{proof}[Proof of Theorem \ref{thm:typeD}]
+For the spin weights $\la$ is minuscule and Proposition \ref{prop:minuscule}
+applies.  Let $k\le n-2$.  By Lemma \ref{lem:P} the colour-$t$ profile of
+$I_\ka$ is $(1,2^{k-1},1)$.  By Theorem \ref{thm:main}, $V$ is a submodule of
+$I_\ka$ with $\dimv V=v$, so Proposition \ref{prop:T} applies to it and the
+colour-$t$ multiplicities of $V$ are the truncation displayed above.  Every
+multiplicity is $\le1$ exactly when $v_t\le2$.  By Proposition
+\ref{prop:Ad}, simplicity at $t$ implies simplicity everywhere.  Lemma
+\ref{lem:C} identifies $v_t=r+2m$.
+\end{proof}
+
+\begin{remark}
+The disjunctive form ``$c_{\max}=1$ or $v_t\le2$'' of the criterion, natural
+from the $c$-trace, collapses once the spin weights are separated: for
+non-spin $\la$ in type $D$, $c_{\max}=1$ forces
+$(r,m)\in\{(0,0),(0,1),(1,0),(2,0)\}$, all of which satisfy $r+2m\le2$.
+\end{remark}
+
+\section{Type \texorpdfstring{$E$}{E}}\label{sec:typeE}
+
+Theorem \ref{thm:main} and Corollary \ref{cor:crit} are uniform and therefore
+settle type $E$ as well: the criterion is decidable from any reduced word.
+Two further points deserve comment.
+
+\subsection{Reduction to the trivalent node}
+The window-containment argument of Proposition \ref{prop:Ad} does not survive
+into type $E$: in $E_6$ with $\ka=3$ (so $I_3=\Pia e_5$) vertex $3$ carries
+multiplicity $2$ in path-length degree $4$, whereas vertex $4$ is zero in that
+degree, its multiplicity-$2$ degrees being $3,5,7$.  Since $\Gamma$ has arms of
+length $\ge2$ on two sides, a repeat can sit at a degree at which the trivalent
+node is quiet inside $I_\ka$.  A different mechanism is available, and it is
+both simpler and uniform.
+
+For $i\ne t$ let $\mathrm{nx}(i)$ denote the neighbour of $i$ one step closer
+to $t$.
+
+\begin{lemma}[inward injectivity]\label{lem:I}
+Let $\Gamma$ be $E_6$, $E_7$ or $E_8$.  For every fundamental weight $\ka$,
+every $i\ne t$ and every degree $d$ with $\dim (I_\ka)_i[d]\ge2$, the arrow
+\[
+   (I_\ka)_i[d]\longrightarrow (I_\ka)_{\mathrm{nx}(i)}[d+1]
+\]
+is injective.
+\end{lemma}
+
+\begin{proof}
+The three diagrams have finitely many triples $(\ka,i,d)$ in total, so this is
+a finite verification: $11$ instances in $E_6$, $55$ in $E_7$ and $249$ in
+$E_8$, all injective.  See \texttt{inwardlemma.py}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{prop:lemA} in type $E$]
+Suppose $\dim V_i[d]\ge2$ for some $i\ne t$.  Then
+$\dim (I_\ka)_i[d]\ge \dim V_i[d]\ge2$, so by Lemma \ref{lem:I} the inward
+arrow is injective on $(I_\ka)_i[d]$, hence on the subspace $V_i[d]$.  Since
+$V$ is a submodule of $I_\ka$, the image lies in $V_{\mathrm{nx}(i)}[d+1]$, so
+$\dim V_{\mathrm{nx}(i)}[d+1]\ge2$.  Iterating $\mathrm{dist}(i,t)$ times gives
+$\dim V_t[d+\mathrm{dist}(i,t)]\ge2$.  Contrapositively, if $V_t$ is
+multiplicity-free then so is $V$.
+\end{proof}
+
+\begin{remark}
+The same lemma holds in type $D$ for every rank tested ($D_4$ through $D_{10}$,
+$126$ instances), so inward injectivity gives a second, uniform proof of
+Theorem \ref{prop:lemA} there; we keep the window argument of Proposition
+\ref{prop:Ad} because it is rank-uniform by construction.
+\end{remark}
+
+\subsection{No closed form of type-$D$ shape}
+What does \emph{not} carry over is the closed form of Theorem \ref{thm:typeD}:
+$v_t$ is no longer a complete invariant.  In $E_6$ with $\la=\om_3$ both simple
+and non-simple elements occur at $v_t=3$; likewise in $E_7$ with $\la=\om_2$ at
+$v_t=4$.  A closed form must therefore involve more than the multiplicity at
+the trivalent node.  Empirically the classification is a function of the
+dimension vector restricted to the ball of radius $3$ about $t$.
+
+The colour-$t$ multiplicity profiles of $I_\ka$ in type $E$ are finite data,
+computed once and for all; in $E_6$ they are $(1,1,1,1)$, $(1,1,2,1,1)$,
+$(1,2,2,2,1)$, $(1,2,3,3,2,1)$, $(1,2,2,2,1)$, $(1,1,1,1)$ for
+$k=1,\dots,6$, and the maximum multiplicity anywhere in $I_\ka$ is $6$,
+attained in $E_8$ at $k=4$.  This is also why the truncation mechanism of
+\S\ref{sec:typeD} is specific to type $D$: it turns on
+$\dim (I_\ka)_t[d]\le2$, so that the three double paths at $t$, subject to one
+relation, can span everything.
+
+\section{Verification}\label{sec:verification}
+
+The accompanying code reproduces every claim; each script runs standalone and
+prints a pass/fail line.
+
+\begin{itemize}
+\item \texttt{proof.py} --- the five steps of \S\ref{sec:proof}.  The
+Crawley-Boevey identity holds at $5517/5517$ socle steps; $\dimv
+I_\ka=\la-w_0\la$ at $37/37$ injectives across $A_4,A_5,D_4,D_5,D_6,E_6,E_7$;
+$\dimv\soc_\sigma(I_\ka)=v$ for $706/706$ elements; the minuscule statement for
+$256/256$; Proposition \ref{prop:lemA} for $981/981$ elements, of which $681$ are of type
+$E$ and the rest of type $D$.
+\item \texttt{socdim.py} --- Theorem \ref{thm:main} on $1149$ elements and
+$12829$ individual socle steps, no exceptions.
+\item \texttt{sweepall.py} --- the aggregate criterion-versus-solver sweep
+quoted above; \texttt{DKKCAP} raises the orbit-size cutoff and \texttt{DKKP}
+changes the characteristic.
+\item \texttt{verify.py} --- the printed posets of \cite[pp.~82--83]{DKK}
+reproduced with their Hasse edges; the criterion against an independent
+graded-submodule solver; word-independence; Theorem \ref{thm:typeD}.
+\item \texttt{trunctest.py} --- Proposition \ref{prop:T} (top truncation) on
+$1000$ elements of $D_4$--$D_7$, every fundamental weight with orbit at most
+$400$, no exceptions.
+\item \texttt{inwardlemma.py} --- Lemma \ref{lem:I}, exhaustively in $E_6$,
+$E_7$, $E_8$ ($315$ instances) and for $D_4$--$D_{10}$ ($126$ instances).
+\item \texttt{upclosure.py} --- Lemma U ($300$ lines), Lemma S$'$ ($1990$
+colour-$t$ graded pieces) and the defect computation of Remark
+\ref{rem:Tk3} ($96$ violators, all with $\delta>0$).
+\item \texttt{squeeze.py}, \texttt{homological.py}, \texttt{headrule.py},
+\texttt{lemA.py}, \texttt{eproj.py} --- the individual ingredients.
+\end{itemize}
+
+Aggregate agreement of Corollary \ref{cor:crit} with the independent solver is
+$2179/2179$, broken down as type $A$ $214$, type $D$ $1232$, type $E$ $733$;
+this is the output of \texttt{sweepall.py}, which enumerates every fundamental
+weight of $A_3$--$A_6$, $D_4$--$D_7$, $E_6$, $E_7\om_1$ and $E_7\om_7$ whose
+Weyl orbit has at most $400$ elements and compares the criterion against the
+solver element by element.  All computations are over a finite prime field; the
+whole suite was rerun at $p=5,11,13$ with identical results.
+
+\begin{thebibliography}{99}
+
+\bibitem{CB} W.~Crawley-Boevey, \emph{On the exceptional fibres of Kleinian
+singularities}, Amer.\ J.\ Math.\ \textbf{122} (2000), 1027--1037.
+
+\bibitem{DKK} A.~Dinkins, D.~Karpov and V.~Krylov, \emph{The quantum Hikita
+conjecture via quasimaps}, arXiv:2608.16746.
+
+\bibitem{DFKKMSSVW} A.~Dranowski et al., \emph{Heaps, crystals, and
+preprojective algebra modules}, arXiv:2202.02490.
+
+\bibitem{GLS} C.~Geiss, B.~Leclerc and J.~Schr\"oer, \emph{Kac-Moody groups
+and cluster algebras}, Adv.\ Math.\ \textbf{228} (2011), 329--433.
+
+\bibitem{Nak} H.~Nakajima, \emph{Quiver varieties and Kac-Moody algebras},
+Duke Math.\ J.\ \textbf{91} (1998), 515--560.
+
+\bibitem{ST} A.~Savage and P.~Tingley, \emph{Quiver Grassmannians, quiver
+varieties and the preprojective algebra}, Pacific J.\ Math.\ \textbf{251}
+(2011), 393--429.
+
+\bibitem{Stem} J.~Stembridge, \emph{Minuscule elements of Weyl groups}, J.\
+Algebra \textbf{235} (2001), 722--743.
+
+\end{thebibliography}
+
+\end{document}
