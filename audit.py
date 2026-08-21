@@ -500,7 +500,7 @@ def C2_word():
 # ---------------------------------------------------- D: the manuscript agrees
 
 def _digits(path):
-    """The text with LaTeX thin spaces, commas and dollars removed, so that
+    r"""The text with LaTeX thin spaces, commas and dollars removed, so that
     $8\,047\,275$ and 8,047,275 both read as 8047275."""
     raw = open(path).read()
     for a, b in (("\\,", ""), (",", ""), ("$", ""), ("\u2009", ""),

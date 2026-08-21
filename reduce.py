@@ -1,4 +1,4 @@
-"""
+r"""
 THE REMAINING GAP, REDUCED TO k WEIGHTS -- INDEPENDENT OF THE RANK.
 
 The gap is (*o) (starchar.py), in word-free form: for a graded submodule
