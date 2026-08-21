@@ -3,7 +3,9 @@ from rootsys import RootSystem, orbit_with_words
 from wordtrace import trace, v_from_trace
 from dfs2 import solve
 
-typ, n, k = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+typ = sys.argv[1] if len(sys.argv) > 3 else "D"
+n = int(sys.argv[2]) if len(sys.argv) > 3 else 5
+k = int(sys.argv[3]) if len(sys.argv) > 3 else 2
 dmax = int(sys.argv[4]) if len(sys.argv) > 4 else 14
 rs = RootSystem(typ, n); lam = rs.fundamental(k)
 tri = [i for i in rs.I if len(rs.adj[i]) >= 3]

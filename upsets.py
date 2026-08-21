@@ -42,7 +42,11 @@ neighbour t-1, which is not part of (H).  So the whole conjecture now rests on:
 
         (*)  at every colour-t socle step, X is an up-set at t-1.
 
-Verified 2179/2179.  It is not part of a uniform statement: X is an up-set at
+Verified 2179/2179.  The construction order can now be REMOVED from (*): see
+starchar.py for the order-free form (*o) and localstar.py for the local form
+(L), which is the whole remaining gap.
+
+It is not part of a uniform statement: X is an up-set at
 every neighbour of the colour being applied only 18982 times out of 19076, the
 failures all occurring at colour-1 steps far from t; and globally X is an
 up-set at t-1 at 8959 of 8960 stages, the single exception occurring at a

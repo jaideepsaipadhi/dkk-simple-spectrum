@@ -1,6 +1,6 @@
 __pycache__/
 *.pyc
+*.tar.gz
 *.aux
 *.log
 *.out
-*.tar.gz

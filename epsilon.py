@@ -35,24 +35,25 @@ def eps_of_mu(n, k, v):
     for j in range(1, k+1): lam[j] = 1
     return [lam[j] - c[j] for j in range(1, n+1)]
 
-bad = tot = 0
-ex = []
-for n in range(4, 9):
-    rs = RootSystem("D", n); t = n-2
-    for k in range(1, n-1):                     # non-spin fundamental weights
-        lam = rs.fundamental(k)
-        for mu, word in orbit_with_words(rs, lam).items():
-            if not word: continue
-            v = [int(x) for x in v_from_trace(rs, trace(rs, word, lam))]
-            e = eps_of_mu(n, k, v)
-            if any(abs(x) not in (0,1) for x in e) or sum(abs(x) for x in e) != k:
-                bad += 1
-                if len(ex)<3: ex.append(("bad eps", n, k, v, e)); continue
-            r = sum(1 for i in (n-2, n-1) if e[i] != 0)     # 0-indexed: e[n-2]=e_{n-1}
-            m = sum(1 for i in range(0, n-2) if e[i] == -1)
-            tot += 1
-            if v[t-1] != r + 2*m:
-                bad += 1
-                if len(ex)<6: ex.append((n,k,v,e,r,m,v[t-1],r+2*m))
-print(f"identity  v_t = r + 2m  checked on {tot} elements, {bad} failures")
-for x in ex: print("   ",x)
+if __name__ == "__main__":
+    bad = tot = 0
+    ex = []
+    for n in range(4, 9):
+        rs = RootSystem("D", n); t = n-2
+        for k in range(1, n-1):                     # non-spin fundamental weights
+            lam = rs.fundamental(k)
+            for mu, word in orbit_with_words(rs, lam).items():
+                if not word: continue
+                v = [int(x) for x in v_from_trace(rs, trace(rs, word, lam))]
+                e = eps_of_mu(n, k, v)
+                if any(abs(x) not in (0,1) for x in e) or sum(abs(x) for x in e) != k:
+                    bad += 1
+                    if len(ex)<3: ex.append(("bad eps", n, k, v, e)); continue
+                r = sum(1 for i in (n-2, n-1) if e[i] != 0)     # 0-indexed: e[n-2]=e_{n-1}
+                m = sum(1 for i in range(0, n-2) if e[i] == -1)
+                tot += 1
+                if v[t-1] != r + 2*m:
+                    bad += 1
+                    if len(ex)<6: ex.append((n,k,v,e,r,m,v[t-1],r+2*m))
+    print(f"identity  v_t = r + 2m  checked on {tot} elements, {bad} failures")
+    for x in ex: print("   ",x)

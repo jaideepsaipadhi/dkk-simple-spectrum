@@ -2,7 +2,9 @@ import json, sys, time
 from rootsys import RootSystem, orbit_with_words
 from wordtrace import trace, v_from_trace
 from dfs3 import solve
-typ, n, k = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+typ = sys.argv[1] if len(sys.argv) > 3 else "D"
+n = int(sys.argv[2]) if len(sys.argv) > 3 else 5
+k = int(sys.argv[3]) if len(sys.argv) > 3 else 2
 rs = RootSystem(typ, n); lam = rs.fundamental(k)
 out = open("extra.jsonl", "a")
 t0=time.time(); cnt=0

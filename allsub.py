@@ -67,21 +67,22 @@ def all_submodules(rs,k):
     rec(top,{})
     return pr,out
 
-for typ,n,k in [("D",4,2),("D",5,2),("D",5,3),("D",6,2)]:
-    rs=RootSystem(typ,n); t=n-2
-    pr,subm=all_submodules(rs,k)
-    degs=[d for d in range(pr.top+1) if pr.dim.get((d,t),0)]
-    seq=[pr.dim[(d,t)] for d in degs]
-    def bottom_trunc(total):
-        o={}; 
-        for s,d in zip(seq,degs):
-            if total<=0: break
-            take=min(s,total); o[d]=take; total-=take
-        return o
-    bad=0
-    for N in subm:
-        q={d: pr.dim[(d,t)]-len(N.get((d,t),[])) for d in degs}
-        q={d:c for d,c in q.items() if c}
-        if q != bottom_trunc(sum(q.values())): bad+=1
-    print(f"D{n} e_{k}: {len(subm)} graded submodules; "
-          f"{bad} whose colour-{t} quotient is NOT a bottom-truncation")
+if __name__ == "__main__":
+    for typ,n,k in [("D",4,2),("D",5,2),("D",5,3),("D",6,2)]:
+        rs=RootSystem(typ,n); t=n-2
+        pr,subm=all_submodules(rs,k)
+        degs=[d for d in range(pr.top+1) if pr.dim.get((d,t),0)]
+        seq=[pr.dim[(d,t)] for d in degs]
+        def bottom_trunc(total):
+            o={}; 
+            for s,d in zip(seq,degs):
+                if total<=0: break
+                take=min(s,total); o[d]=take; total-=take
+            return o
+        bad=0
+        for N in subm:
+            q={d: pr.dim[(d,t)]-len(N.get((d,t),[])) for d in degs}
+            q={d:c for d,c in q.items() if c}
+            if q != bottom_trunc(sum(q.values())): bad+=1
+        print(f"D{n} e_{k}: {len(subm)} graded submodules; "
+              f"{bad} whose colour-{t} quotient is NOT a bottom-truncation")
