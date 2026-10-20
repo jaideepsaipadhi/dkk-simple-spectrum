@@ -20,17 +20,7 @@ def gr(p,m):
         x=min(p[d],m)
         if x: o[d]=x; m-=x
     return o,m
-def is_upset(col,P):
-    """occupied degrees are the top ones and every occupied slot is full"""
-    ds=sorted(P,reverse=True)
-    seen_zero=False
-    for d in ds:
-        c=col.get(d,0)
-        if c==0: seen_zero=True
-        else:
-            if seen_zero: return False
-            if c!=P[d]: return False
-    return True
+from upset import is_upset
 tab=collections.Counter()
 for k in rs.I:
     lam=rs.fundamental(k); pr=proj(rs,nakayama(rs)[k])
