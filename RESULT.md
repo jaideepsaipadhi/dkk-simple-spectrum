@@ -1,7 +1,16 @@
 # A construction and a criterion for simple spectrum
 
-**Answering the open problem of §5.4.2 of Dinkins–Karpov–Krylov,
-*The quantum Hikita conjecture via quasimaps* (arXiv:2608.16746).**
+> **SUPERSEDED.** This write-up is kept for the record. The current statement of
+> everything below is `typeD.tex` / `typeD.pdf`; where the two disagree, the
+> manuscript is right. Two known defects in this file: it claims the open
+> problem of §5.4.2 without the qualification that the answer covers **type D
+> for non-spin fundamental λ only** (type E at non-minuscule λ, and λ not
+> fundamental, are open), and it predates the correction of the representative
+> count from k to **9(k−1)** — the reduction through J = I ∖ {t−1, t} is not
+> closed. See §1.3 and §14.3 of the manuscript.
+
+On the open problem of §5.4.2 of Dinkins–Karpov–Krylov,
+*The quantum Hikita conjecture via quasimaps* (arXiv:2608.16746).
 
 ---
 

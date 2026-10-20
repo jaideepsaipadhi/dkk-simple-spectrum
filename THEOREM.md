@@ -1,5 +1,10 @@
 # A combinatorial criterion for simple spectrum in type D
 
+> **SUPERSEDED.** Kept for the record; the current statement is `typeD.tex` /
+> `typeD.pdf`, and where the two disagree the manuscript is right. This file
+> predates the correction of the representative count from k to **9(k−1)**
+> (§14.3 of the manuscript) and does not state the scope boundary of §1.3.
+
 Toward the open problem of §5.4.2 of Dinkins–Karpov–Krylov,
 *The quantum Hikita conjecture via quasimaps*, arXiv:2608.16746.
 

@@ -1,5 +1,8 @@
 # DKK §5.4.2 — computational attack, working notes
 
+> **HISTORICAL.** These are working notes recorded as the search went, including
+> guesses later refuted. They are not a statement of results; `typeD.tex` is.
+
 Target: arXiv:2608.16746 (Dinkins–Karpov–Krylov), Section 5.4.2.
 
 > "We consider it an interesting open problem to find a combinatorial
