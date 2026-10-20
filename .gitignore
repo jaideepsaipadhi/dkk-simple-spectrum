@@ -7,3 +7,4 @@ __pycache__/
 
 # computation caches
 .echar_*.pkl
+*.bak
