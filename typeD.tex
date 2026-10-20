@@ -194,13 +194,9 @@ these are used only through $(B)$, which \S\ref{sec:charp} transports.  None is
 claimed at $p=2$; Proposition \ref{prop:W2} is in fact \emph{false} there, in
 every formulation we know (Remark \ref{rem:filtfail}).
 \item \emph{Off the logical path}: \S\ref{sec:nodeone} and
-\S\ref{sec:staircase}, neither of which is used by anything else.  Within the
-latter the characteristic splits: Theorem \ref{thm:staircase} and Lemma
-\ref{lem:intervals} hold over an arbitrary field, whereas Lemmas
-\ref{lem:U0}, \ref{lem:U} and Proposition \ref{prop:tau} retain
-$\operatorname{char}\ne2$ and are \emph{not} transported, the determinant
-argument in Lemma \ref{lem:U} genuinely degenerating at $p=2$ (Remark
-\ref{rem:sec9char}).  Theorem \ref{thm:typeD} does not care either way.
+\S\ref{sec:staircase}, neither of which is used by anything else, and both of
+which hold over an arbitrary field.  Theorem \ref{thm:typeD} does not care
+either way.
 \end{itemize}
 
 Section \ref{sec:verification} separates what is proved from what is merely
@@ -2529,9 +2525,7 @@ list correctly in either case: the condition there is $W_{J'}$-minimality
 together with $c_t(\mu)\ge1$, and $\la$ satisfies both when $k=n-2$.)  They are the
 $W_J$-minimal weights for the larger parabolic $J=I\setminus\{t-1,t\}$, and
 they are not enough: the reduction through $J$ is not closed, and the other
-$8k-9$ representatives are genuinely new.  In particular their dimension
-vectors are mostly leaf-unbalanced, so Proposition \ref{prop:tau} below does not
-dispose of them.
+$8k-9$ representatives are genuinely new.
 \end{remark}
 
 The statement we shall prove at the representatives is stronger than
@@ -4461,247 +4455,8 @@ $(H)$), $V$ is a top truncation at $t$ and an up-set at each leaf.  The
 equivalent form follows from Corollary \ref{cor:pol}.  Both inputs are
 available over every field --- Corollary \ref{cor:pol} directly and
 Proposition \ref{prop:T} by Theorem \ref{thm:charp} --- so no hypothesis on
-the characteristic is needed here.  The remaining results of this section do
-carry one; see Remark \ref{rem:sec9char}.
+the characteristic is needed here.
 \end{proof}
-
-The top-truncation half of Theorem \ref{thm:staircase} has, for leaf-balanced
-dimension vectors, a direct proof independent of the whole machinery of
-\S\S\ref{sec:reps}--\ref{sec:induction}; that is Proposition \ref{prop:tau}
-below, and it is the reason for Lemma \ref{lem:U}.
-
-\begin{remark}\label{rem:sec9char}
-Lemma \ref{lem:U0}, Lemma \ref{lem:U} and Proposition \ref{prop:tau} below
-are stated for $\operatorname{char}\ne2$ and are \emph{not} transported to
-$p=2$ by Theorem \ref{thm:charp}: they are not consequences of $(B)$, and the
-determinant \eqref{eq:det} in the proof of Lemma \ref{lem:U} genuinely
-degenerates at $p=2$, the binary quadratic form
-$\lambda^2a_+m_+-\nu^2a_-m_-$ becoming a square there.  Since this whole
-section is a complement on which nothing else depends, we leave it so.
-\end{remark}
-
-\subsection{The node double-path lemma}
-For $x\in(I_\ka)_t[d]$ set
-\[
-   A(x)=a_{(t-1)\to t}a_{t\to(t-1)}x,\quad
-   B(x)=a_{(n-1)\to t}a_{t\to(n-1)}x,\quad
-   C(x)=a_{n\to t}a_{t\to n}x,
-\]
-and $\Theta(x)=\operatorname{span}\{A(x),B(x),C(x)\}\subseteq(I_\ka)_t[d+2]$.
-With the sign convention $\varsigma(i,j)=\operatorname{sign}(j-i)$ the preprojective
-relation at $t$ reads
-\begin{equation}\label{eq:Rt}
-   -A(x)+B(x)+C(x)=0,\qquad\text{i.e.}\qquad P(x):=B(x)+C(x)=A(x),
-\end{equation}
-so $\Theta(x)=\operatorname{span}\{A(x),B(x)\}$ has dimension at most $2$.  Set
-also $Q(x):=B(x)-C(x)$; since $\operatorname{char}\ne2$,
-$\operatorname{span}\{B(x),C(x)\}=\operatorname{span}\{P(x),Q(x)\}$.  Call
-$x$ \emph{special} if some leaf arrow kills it.
-
-\begin{lemma}[interval facts]\label{lem:intervals}
-Let $2\le k\le t$ and recall \eqref{eq:supports}.
-\begin{itemize}\itemsep1pt
-\item[\textup{(I1$'$)}] If $\eps$ is present at $(t,d)$ and at $(t,d+2)$, then
-$\eps$ is present at $(t-1,d+1)$.  \emph{No hypothesis on $\dim(I_\ka)_t[d]$.}
-\item[\textup{(I3)}] If $(I_\ka)_t[d]\ne0$ and $\dim(I_\ka)_t[d+2]=1$, then
-$d=t+k-2$, the surviving strand at $(d+2,t)$ is $-$, and at $(t-1,d+1)$ the
-strand $-$ is present and $+$ is not.
-\item[\textup{(I4$'$)}] If $(I_\ka)_t[d]\ne0$ and $(I_\ka)_t[d+2]\ne0$ then
-both leaf slots at degree $d+1$ are nonzero, hence lines.
-\item[\textup{(I5)}] The node slots with $\dim(I_\ka)_t[d]=1$ and
-$(I_\ka)_t[d+2]\ne0$ are exactly $d=t-k$; there the $+$ strand alone is present
-and both strands are present at $d+2$.
-\end{itemize}
-\end{lemma}
-
-\begin{proof}
-(I1$'$), plus strand: presence at $(t,d+2)$ gives $d+2\le t+k-2$, hence
-$d+1\le(t-1)+k-2$; presence at $(t,d)$ gives $d\ge|t-k|$, and
-$|t-1-k|\le|t-k|+1$, hence $d+1\ge|t-1-k|$; the parity is right since
-$d\equiv t+k$ gives $d+1\equiv(t-1)+k$.  Minus strand: $-$ is present at $(j,e)$
-iff $+$ is present at $(j,2t-e)$, so putting $e=2t-d-2$ the hypothesis becomes
-``$+$ at $(t,e)$ and $+$ at $(t,e+2)$'' and the conclusion ``$+$ at $(t-1,e+1)$'',
-which is the plus case.  Nothing in this argument inspects the other strand, so
-it is valid at a slot of dimension $1$.
-
-(I3): $\dim(I_\ka)_t[d+2]=1$ forces $d+2\in\{t-k,t+k\}$; the value $t-k$ gives
-$d=t-k-2$, below the node support, contradicting $(I_\ka)_t[d]\ne0$.  So
-$d+2=t+k$ and the survivor is the $-$ strand (as $\hi^+_t=t+k-2$), and
-$d=t+k-2$.  Then $d+1=t+k-1>t+k-3=\hi^+_{t-1}$, so $+$ is absent at
-$(t-1,d+1)$; and $t-k+3\le t+k-1\le 2t-|t-1-k|$ for $k\ge2$, so $-$ is present.
-
-(I4$'$): the node support is $[t-k,\,t+k]$ and, by Lemma \ref{lem:P}, the leaf
-support is $[t-k+1,\,t+k-1]$.  Now $(I_\ka)_t[d]\ne0$ gives $d\ge t-k$, hence
-$d+1\ge t-k+1$; and $(I_\ka)_t[d+2]\ne0$ gives $d+2\le t+k$, hence
-$d+1\le t+k-1$.  The parity is right: $d\equiv t+k$ gives $d+1\equiv t+k+1$,
-the leaf parity.
-
-(I5): $\dim(I_\ka)_t[d]=1$ means $d\in\{t-k,t+k\}$.  At $d=t+k$ the slot $d+2$
-lies beyond the node support, so $(I_\ka)_t[d+2]=0$.  At $d=t-k$ only $+$ is
-present, and $d+2=t-k+2$ lies in both supports precisely when $k\ge2$.
-\end{proof}
-
-\begin{lemma}\label{lem:U0}
-Assume $\operatorname{char}\ne2$ and $2\le k\le n-2$.  Let $d$ satisfy
-$(I_\ka)_t[d]\ne0$ and $(I_\ka)_{n-1}[d+1]\ne0$ \textup{(}equivalently, by
-$\tau$, $(I_\ka)_n[d+1]\ne0$\textup{)}.  Then:
-\begin{enumerate}
-\item[\textup{(i)}] no $\tau$-eigenline of $(I_\ka)_t[d]$ is special;
-\item[\textup{(ii)}] if $\dim(I_\ka)_t[d]=2$, the two kernels
-$\ker a_{t\to(n-1)}$ and $\ker a_{t\to n}$ are distinct lines, and the special
-vectors are exactly their union --- two lines, never a subspace;
-\item[\textup{(iii)}] if $\dim(I_\ka)_t[d]=1$, no nonzero $x\in(I_\ka)_t[d]$ is
-special.
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
-(i) is Proposition \ref{prop:W4n}, applied to each leaf in turn.  (ii): by
-Lemma \ref{lem:P} each leaf slot is at most a line, so each kernel of a map from
-a two-dimensional space contains a line; if the two kernels shared a line $S$
-then, $\tau$ exchanging the two arrows out of $t$, $S$ would be $\tau$-stable,
-hence a $\tau$-eigenline that is special, contradicting (i).  Distinctness
-forces each kernel to be exactly a line.  (iii): a one-dimensional slot is
-$\tau$-stable, hence an eigenline; apply (i).
-\end{proof}
-
-\begin{lemma}[node double-path lemma]\label{lem:U}
-Assume $\operatorname{char}\ne2$ and $2\le k\le n-2$, and let $d$ satisfy
-$(I_\ka)_t[d]\ne0$ and $(I_\ka)_t[d+2]\ne0$.  Exactly one of the following
-three shapes occurs, and in each:
-\begin{itemize}\itemsep1pt
-\item[\textup{(U1)}] $\dim(I_\ka)_t[d]=\dim(I_\ka)_t[d+2]=2$: then
-$\Theta(x)=(I_\ka)_t[d+2]$ for every non-special $x$, and $\dim\Theta(x)\le1$
-on the two special lines;
-\item[\textup{(U2)}] $\dim(I_\ka)_t[d]=2$, $\dim(I_\ka)_t[d+2]=1$: then
-$\Theta(x)=(I_\ka)_t[d+2]$ for every $x\ne0$, special or not;
-\item[\textup{(U3)}] $\dim(I_\ka)_t[d]=1$ --- necessarily $d=t-k$ and
-$\dim(I_\ka)_t[d+2]=2$: then $\Theta(x)=(I_\ka)_t[d+2]$ for every $x\ne0$, and
-no $x\ne0$ is special.
-\end{itemize}
-\end{lemma}
-
-\begin{proof}
-That these are the only shapes is (I5).  By (I4$'$) the leaf slots at $d+1$ are
-nonzero, so Lemma \ref{lem:U0} is available at $d$ throughout.
-
-\emph{Cases (U1), (U2): $\dim(I_\ka)_t[d]=2$.}  Let $u^{+},u^{-}$ be a
-$\tau$-eigenbasis of $(I_\ka)_t[d]$, and $w^{+},w^{-}$ eigenvectors spanning
-the nonzero eigen-parts of $(I_\ka)_t[d+2]$.  Both $P=A$ and $A$ commute with
-$\tau$, so $P$ preserves the eigen-grading, while $Q$ anticommutes with it and
-reverses it.  Write
-\[
-   A(u^{+})=a_+w^{+},\quad A(u^{-})=a_-w^{-},\quad
-   Q(u^{+})=m_+w^{-},\quad Q(u^{-})=m_-w^{+},
-\]
-with the convention that a coefficient whose target eigenline is absent is
-read as $0$.
-
-\emph{Step 1 (the $a$'s).}  Let $\eps$ be present at $(t,d)$ and at $(t,d+2)$.
-By (I1$'$), $\eps$ is present at $(t-1,d+1)$, and then Corollary \ref{cor:W4}
-makes both $a_{t\to(t-1)}$ and $a_{(t-1)\to t}$ isomorphisms on the
-$\eps$-line: $a_\eps\ne0$.
-
-\emph{Step 2 (the $m$'s).}  Put $y:=a_{t\to(n-1)}u^{\eps}$.  By Lemma
-\ref{lem:U0}(i) the eigenline $\langle u^\eps\rangle$ is not special, so
-$y\ne0$; and by (I4$'$) the folded leaf space $J[d+1]$ is the induced
-$\mathbb{Z}/2$-representation on a line, so each of $J[d+1]^{\pm}$ is a line.
-From $\tau u^{\eps}=\eps u^{\eps}$ and
-$\tau a_{t\to(n-1)}=a_{t\to n}\tau$ one gets
-$a_{t\to n}u^{\eps}=\eps\,\tau(y)$, whence
-\[
-   L(u^{\eps})=\varphi_{\eps}\bigl((y,\eps\,\tau y)\bigr),
-   \qquad
-   Q(u^{\eps})=\varphi_{-\eps}\bigl((y,-\eps\,\tau y)\bigr),
-\]
-where $\varphi_{\delta}:J[d+1]^{\delta}\to(I_\ka)_t[d+2]^{\delta}$ is the
-folded leaf map.  The vector $(y,-\eps\tau y)$ is a nonzero element of
-$J[d+1]^{-\eps}$, hence spans it, so Proposition \ref{prop:W4l} gives
-\[
-   m_{\eps}\ne0\iff \text{the strand } -\eps \text{ is present at } (d+2,t).
-\]
-
-\emph{Step 3 (the determinant).}  For $x=\lambda u^{+}+\nu u^{-}$,
-\[
-   P(x)=\lambda a_+w^{+}+\nu a_-w^{-},\qquad
-   Q(x)=\nu m_-w^{+}+\lambda m_+w^{-},
-\]
-so in the basis $(w^+,w^-)$,
-\begin{equation}\label{eq:det}
-   \det\bigl(P(x),Q(x)\bigr)=\lambda^2a_+m_+-\nu^2a_-m_- .
-\end{equation}
-
-In case (U1) both strands are present at $(d+2,t)$, so Steps 1--2 make
-$a_\pm,m_\pm$ all nonzero, and \eqref{eq:det} is a binary quadratic form with
-both coefficients nonzero: its zero locus is a union of at most two lines.
-Every special $x$ lies in that locus, since $B(x)=0$ or $C(x)=0$ forces
-$\dim\operatorname{span}\{B(x),C(x)\}\le1$; and by Lemma \ref{lem:U0}(ii) there
-are two distinct special lines.  Hence the zero locus is exactly those two
-lines, and $\dim\Theta(x)=2$ for every non-special $x$.
-
-In case (U2), by (I3) the surviving strand at $d+2$ is $-$ and $d=t+k-2$.  So
-$a_+=0$ and $m_-=0$ (their targets are the absent $+$ line), while $a_-\ne0$
-(Step 1, with $-$ present at $d$ and $d+2$) and $m_+\ne0$ (Step 2, with
-$-\eps=-$ present at $d+2$).  Hence $P(x)=\nu a_-w^-$ and $Q(x)=\lambda m_+w^-$,
-so $\Theta(x)=\operatorname{span}\{P(x),Q(x)\}$ is the whole one-dimensional
-target unless $\lambda=\nu=0$.
-
-\emph{Case (U3): $\dim(I_\ka)_t[d]=1$.}  By (I5), $d=t-k$, the source carries
-the $+$ strand alone (so $x$ spans the $+$ eigenline, $\tau x=x$), and both
-strands are present at $d+2$; let $w^{\pm}$ be an eigenbasis there.  Step 1
-applies with $\eps=+$, using (I1$'$), which carries no hypothesis on
-$\dim(I_\ka)_t[d]$: $A(x)=a_+w^+$ with $a_+\ne0$.  Step 2 applies with
-$\eps=+$, using (I4$'$), whose two hypotheses are exactly those of the present
-lemma --- at $d=t-k$ the relevant leaf slot is the \emph{bottom} slot
-$t-k+1$ of the leaf support --- and Lemma \ref{lem:U0}(iii): $y\ne0$, and since
-the $-$ strand is present at $(d+2,t)$, Proposition \ref{prop:W4l} gives
-$Q(x)=m_+w^-$ with $m_+\ne0$.  Thus $P(x)=A(x)$ and $Q(x)$ are nonzero vectors
-in distinct eigenlines, hence independent, and
-$\Theta(x)=(I_\ka)_t[d+2]$.  Finally no $x\ne0$ is special, by Lemma
-\ref{lem:U0}(iii).
-\end{proof}
-
-\begin{proposition}\label{prop:tau}
-Assume $\operatorname{char}\ne2$ and $v_{n-1}=v_n$.  If $M\subseteq I_\ka$ is a
-graded submodule which is not a top truncation at $t$, then $\dimv M$ is not
-extremal.  In particular the top-truncation half of Theorem \ref{thm:staircase}
-holds for leaf-balanced dimension vectors, independently of
-\S\S\ref{sec:reps}--\ref{sec:induction}.
-\end{proposition}
-
-\begin{proof}
-Suppose $M$ is not a top truncation at $t$: say $M_t[d]\ne0$ while $M_t[d+2]$
-is a proper subspace of $(I_\ka)_t[d+2]$ (in particular $(I_\ka)_t[d+2]\ne0$).
-Let $0\ne x\in M_t[d]$.  Its three double paths lie in $M_t[d+2]$, so by Lemma
-\ref{lem:U} $x$ must be special: otherwise $\Theta(x)=(I_\ka)_t[d+2]\subseteq
-M_t[d+2]$, contradicting properness.
-
-At every slot Lemma \ref{lem:U} reaches, a special vector forces
-$\dim(I_\ka)_t[d]=2$.  Indeed the node slots of dimension $1$ are $d=t-k$ and
-$d=t+k$; the second is excluded from Lemma \ref{lem:U} by (I5), because there
-$(I_\ka)_t[d+2]=0$; and at the first, the leaf slots at $d+1$ are nonzero by
-(I4$'$), so Lemma \ref{lem:U0}(iii) applies and no nonzero $x$ is special.
-
-So $\dim(I_\ka)_t[d]=2$, every nonzero $x\in M_t[d]$ is special, and by Lemma
-\ref{lem:U0}(ii) the special vectors are the union of the two leaf kernels ---
-two distinct lines, not a subspace.  Hence $M_t[d]$ is one of those two lines.
-The automorphism $\tau$ fixes $I_\ka$ and exchanges the two arrows out of $t$
-to the leaves, hence exchanges the two special lines; so $\tau(M)\ne M$.  When
-$v_{n-1}=v_n$ we have $\dimv\tau(M)=\dimv M$, and two distinct submodules with
-one dimension vector contradict Corollary \ref{cor:pol}.  So $\dimv M$ is not
-extremal.
-
-\end{proof}
-
-\begin{remark}
-The universal statement ``a special vector exists only where
-$\dim(I_\ka)_t[d]=2$'' is \emph{false}: at the top node slot $d=t+k$ both leaf
-slots at $d+1=t+k+1$ vanish, the leaf top degree being $t+k-1$, so every
-nonzero vector there is special, at a slot of dimension $1$.  What is true, and
-all that is used, is the relative statement in the proof above: among the slots
-that Lemma \ref{lem:U} reaches, a special vector forces dimension $2$.  The work
-is done by (I5) and (I4$'$), not by Lemma \ref{lem:U0} alone.
-\end{remark}
 
 \section{What is verified, what is proved, and what fails}
 \label{sec:verification}
@@ -4769,8 +4524,7 @@ Propositions \ref{prop:reps}, \ref{prop:incr}, \ref{prop:decr}, \ref{prop:PS},
 the census behind Proposition \ref{prop:L5} &
  closed form, $D_4$--$D_{44}$, all $k$, all families, every $h$ &
  $4.8\times10^{7}$ obligations\\
-Lemma \ref{lem:intervals} and Proposition \ref{prop:T012} &
- closed form to $D_{200}$ resp.\ $D_{100}$, all $k$ &
+Proposition \ref{prop:T012} & closed form to $D_{100}$, all $k$ &
  $2.4\times10^{7}$ arrow/degree pairs\\
 Proposition \ref{prop:foldsol} and Corollary \ref{cor:mfree} &
  closed form $D_4$--$D_{80}$ resp.\ $D_4$--$D_{150}$; against $I_\ka$ over
@@ -4779,8 +4533,6 @@ Theorem \ref{thm:staircase}, Lemma \ref{lem:ab}, Corollary \ref{cor:F},
  against \emph{every} graded submodule of $I_\ka$ &
  $D_7$, $D_8$, all $k$, over $\mathbb{F}_{2,3,5}$ &
  counts are field-dependent\\
-Lemma \ref{lem:U}, which \S\ref{sec:charp} does \emph{not} transport &
- $D_4$--$D_{40}$, all $k$, $p\in\{2,3,5,7,11,13\}$ & $9139$ node slots\\
 \hline
 \end{tabular}
 \end{center}
