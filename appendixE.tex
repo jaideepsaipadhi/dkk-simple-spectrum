@@ -1,0 +1,313 @@
+\documentclass[reqno]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=0.92in]{geometry}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{convention}[theorem]{Convention}
+
+\DeclareMathOperator{\soc}{soc}
+\DeclareMathOperator{\topp}{top}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\End}{End}
+\newcommand{\dimv}{\underline{\dim}\,}
+\newcommand{\la}{\lambda}
+\newcommand{\al}{\alpha}
+\newcommand{\om}{\omega}
+\newcommand{\ka}{\kappa}
+\newcommand{\Pia}{\Pi}
+
+\makeatletter
+\def\@secnumfont{\bfseries}
+\makeatother
+\setlength{\topsep}{2pt plus 1pt minus 1pt}
+
+\begin{document}
+
+\title[Type $E$ examples with $c_p=3$]{Type $E$ examples beyond the
+$\la$-minuscule range:\\ the extremal weights with a $c$-trace entry $3$}
+
+\author{Jaideep Sai Padhi}
+\address{Department of Mathematics, Purdue University, West Lafayette, IN 47907}
+\email{jpadhi@purdue.edu}
+
+\begin{abstract}
+Let $\Gamma$ be a simply-laced Dynkin diagram, $\la=\om_\ka$ a fundamental
+weight, $w$ an element of the Weyl group of minimal length in $wW_\la$, and
+$V$ the unique $T$-fixed representation on
+$\mathfrak{M}(\la-w\la,\la)$.  The \emph{$c$-trace} of $w$ is the sequence
+$c_p=\langle\al_{i_p}^\vee,\mu^{(p-1)}\rangle$ attached to a reduced word, and
+$w$ is $\la$-minuscule exactly when every $c_p=1$.  We determine, by an
+exhaustive computation over all of $E_6$ and $E_7$ and all fundamental
+$\la$, every extremal weight whose $c$-trace attains the value $3$ and whose
+$V$ has simple spectrum.  There are exactly nine, listed in Table
+\ref{tab:nine}; one of them, number (4), is not fully commutative.  No
+extremal weight in $E_6\cup E_7$ with a $c$-trace entry $\ge4$ has simple
+spectrum.  The computation is carried out twice, by independent methods, and
+the claims of this note are computational, not proved.
+\end{abstract}
+
+\maketitle
+
+\section{What is computed, and what is not}\label{sec:scope}
+
+Everything in this note is the output of a finite computation, performed in two
+independent ways that agree on every case where both terminate.  Nothing here
+is proved.  We say this at the outset because the companion
+work is proof-based and we do not wish the two to be confused.
+
+The two methods are:
+
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Socle filtration.}  Build the injective $\Pia$-module $I_\ka$
+explicitly as $\Pia e_{\nu(\ka)}$, where $\nu$ is the Nakayama permutation,
+and compute the iterated socle $\soc_\sigma(I_\ka)$ along the $c$-weighted
+sequence $\sigma$ of a reduced word for $w$.  Each socle step of colour $j$ is
+the kernel computation
+\[
+   X\ \longmapsto\ \{\,x\in I_\ka:\ a_{j\to i}\,x\in X\ \text{for every } i\sim j\,\},
+\]
+so the whole filtration costs one linear-algebra pass per letter.  By the main
+theorem of the companion work, $V\cong\soc_\sigma(I_\ka)$, so the graded
+dimensions of the socle layers are the graded dimensions of $V$, and simple
+spectrum is the condition that every layer be multiplicity-free in each colour.
+\item \emph{Submodule search.}  Search directly for a graded submodule of
+$I_\ka$ of dimension vector $v=\la-w\la$, by depth-first search over the
+subspace lattice degree by degree.  This uses no theorem; it is slow, and in
+$E_7$ it does not terminate on the larger weights.
+\end{enumerate}
+
+We validated (i) against (ii) on $1001$ extremal weights --- all of
+$A_3\,\om_1$, $D_4\,\om_2$, $D_5\,\om_4$, $E_6\,\om_4$, $E_6\,\om_5$ and
+$E_6\,\om_6$ --- with no disagreement: the dimension vectors agree in every
+case, and the socle layers agree with the layers of (ii) after reversing the
+degree, which is the expected shift between a projective generated in degree
+$0$ and an injective with socle in degree $0$.  The validation set was chosen
+to include vertices \emph{not} fixed by $\nu$ ($A_3$, $D_5\,\om_4$,
+$E_6\,\om_5$, $E_6\,\om_6$), since at a $\nu$-fixed vertex the distinction
+between $\Pia e_\ka$ and $\Pia e_{\nu(\ka)}$ is invisible and an error in the
+Nakayama bookkeeping would not show.
+
+Method (i) alone was then run exhaustively.  We note precisely what
+``exhaustively'' covers:
+
+\begin{itemize}
+\item $E_6$: all six fundamental $\la$, all $1272$ nontrivial extremal
+weights (orbit sizes $27,72,216,720,216,27$).  Complete.
+\item $E_7$: all seven fundamental $\la$, all $17635$ nontrivial extremal
+weights (orbit sizes $126,576,2016,10080,4032,756,56$).  Complete.
+\item $E_8$: $\la=\om_1$ and $\la=\om_8$ only (orbit sizes $2160$ and $240$).
+Both reach $\max_pc_p=2$ and contain no element with a $c$-trace entry $3$ at
+all.  The remaining six fundamental weights of $E_8$ have orbits too large for
+the present implementation and are \emph{not} covered.
+\end{itemize}
+
+\section{The nine examples}
+
+\begin{convention}
+Vertices are numbered as in Bourbaki: $E_n$ has the chain
+$1-3-4-5-\cdots-n$ with vertex $2$ attached to vertex $4$, so vertex $4$ is
+trivalent.  A weight $\mu$ is written in the basis of fundamental weights,
+$\mu=(\langle\al_1^\vee,\mu\rangle,\dots,\langle\al_n^\vee,\mu\rangle)$.
+Dimension vectors $v$ are written in the basis of simple roots, so
+$\la-w\la=\sum_iv_i\al_i$.  A reduced word $s_{i_1}\cdots s_{i_\ell}$ acts with
+$s_{i_\ell}$ first, and the $c$-trace is listed in that order, so $c_1$ is the
+entry of the rightmost letter.  The displayed $V$ lists the socle layers of
+$\soc_\sigma(I_\ka)$ from the bottom up, each layer as the multiset of its
+colours.
+\end{convention}
+
+\begin{theorem}[computational]\label{thm:nine}
+Let $\Gamma\in\{E_6,E_7\}$, let $\la=\om_\ka$ be any fundamental weight and
+let $w$ be of minimal length in $wW_\la$.  Suppose the $c$-trace of $w$
+attains the value $3$.  Then $T$ acts on $V$ with simple spectrum if and only
+if $(\Gamma,\la,w)$ is one of the nine triples of Table \ref{tab:nine}.  Of
+the $7094$ such triples in $E_6\cup E_7$, these nine are the only ones.
+\end{theorem}
+
+\begin{table}[ht]
+\small
+\begin{tabular}{@{}rllrl@{}}
+\toprule
+ & $\Gamma$, $\la$ & $w$ & $\ell(w)$ & $c$-trace \\
+\midrule
+(1) & $E_6$, $\om_4$ & $s_2s_4s_5s_6s_3s_4s_5s_1s_3s_4$ & $10$ & $(1^9,3)$ \\
+(2) & $E_7$, $\om_3$ & $s_3s_4s_5s_6s_7s_2s_4s_5s_6s_1s_3s_4s_5s_2s_4s_3$ & $16$ & $(1^6,2,1^8,3)$ \\
+(3) & $E_7$, $\om_3$ & $s_1s_3s_4s_5s_6s_7s_2s_4s_5s_6s_3s_4s_5s_2s_4s_3$ & $16$ & $(1^{15},3)$ \\
+(4) & $E_7$, $\om_3$ & $s_1s_3s_4s_5s_6s_7s_2s_4s_5s_6s_1s_3s_4s_5s_2s_4s_3$ & $17$ & $(1^6,2,1^8,3,1)$ \\
+(5) & $E_7$, $\om_4$ & $s_2s_4s_5s_6s_3s_4s_5s_1s_3s_4$ & $10$ & $(1^9,3)$ \\
+(6) & $E_7$, $\om_4$ & $s_7s_2s_4s_5s_6s_3s_4s_5s_1s_3s_4$ & $11$ & $(1^9,3,1)$ \\
+(7) & $E_7$, $\om_4$ & $s_6s_7s_2s_4s_5s_6s_3s_4s_5s_1s_3s_4$ & $12$ & $(1^9,3,1^2)$ \\
+(8) & $E_7$, $\om_4$ & $s_5s_6s_7s_2s_4s_5s_6s_3s_4s_5s_1s_3s_4$ & $13$ & $(1^9,3,1^3)$ \\
+(9) & $E_7$, $\om_5$ & $s_2s_4s_5s_6s_7s_3s_4s_5s_6s_1s_3s_4s_5$ & $13$ & $(1^{12},3)$ \\
+\midrule
+ & $\mu=w\la$ & $v=\la-w\la$ & $|v|$ & $V$, bottom layer first \\
+\midrule
+(1) & $(0,-3,0,2,0,0)$ & $(1,3,2,3,2,1)$ & $12$ & $\{2\}\,\{4\}\,\{2,3,5\}\,\{1,4,6\}\,\{2,3,5\}\,\{4\}$ \\
+(2) & $(1,0,-3,2,0,0,0)$ & $(2,2,5,4,3,2,1)$ & $19$ & $\{3\}\,\{4\}\,\{2,3,5\}\,\{1,4,6\}\,\{3,5,7\}\,\{4,6\}\,\{2,3,5\}\,\{1,4\}\,\{3\}$ \\
+(3) & $(-3,0,2,0,0,0,0)$ & $(3,2,3,4,3,2,1)$ & $18$ & $\{1\}\,\{3\}\,\{4\}\,\{2,5\}\,\{1,4,6\}\,\{3,5,7\}\,\{4,6\}\,\{2,5\}\,\{1,4\}\,\{3\}$ \\
+(4) & $(-1,0,-2,2,0,0,0)$ & $(3,2,5,4,3,2,1)$ & $20$ & $\{1\}\,\{3\}\,\{4\}\,\{2,3,5\}\,\{1,4,6\}\,\{3,5,7\}\,\{4,6\}\,\{2,3,5\}\,\{1,4\}\,\{3\}$ \\
+(5) & $(0,-3,0,2,0,0,1)$ & $(1,3,2,3,2,1,0)$ & $12$ & $\{2\}\,\{4\}\,\{2,3,5\}\,\{1,4,6\}\,\{2,3,5\}\,\{4\}$ \\
+(6) & $(0,-3,0,2,0,1,-1)$ & $(1,3,2,3,2,1,1)$ & $13$ & $\{2\}\,\{4\}\,\{2,3,5,7\}\,\{1,4,6\}\,\{2,3,5\}\,\{4\}$ \\
+(7) & $(0,-3,0,2,1,-1,0)$ & $(1,3,2,3,2,2,1)$ & $14$ & $\{2\}\,\{4,6\}\,\{2,3,5,7\}\,\{1,4,6\}\,\{2,3,5\}\,\{4\}$ \\
+(8) & $(0,-3,0,3,-1,0,0)$ & $(1,3,2,3,3,2,1)$ & $15$ & $\{2,5\}\,\{4,6\}\,\{2,3,5,7\}\,\{1,4,6\}\,\{2,3,5\}\,\{4\}$ \\
+(9) & $(0,-3,0,2,0,0,0)$ & $(1,3,2,3,3,2,1)$ & $15$ & $\{2\}\,\{4\}\,\{2,3,5\}\,\{1,4,6\}\,\{2,3,5,7\}\,\{4,6\}\,\{5\}$ \\
+\bottomrule
+\end{tabular}
+\medskip
+\caption{The nine extremal weights in $E_6\cup E_7$ whose $c$-trace attains
+$3$ and whose $T$-fixed representation has simple spectrum.  All nine have
+exactly one entry $c_p=3$.  Numbers (2) and (4) have in addition a single
+entry $2$; the other seven are minuscule away from the single $3$.  Number
+(4) is the only one that is not fully commutative.}
+\label{tab:nine}
+\end{table}
+
+\begin{remark}[what the table does and does not pattern]\label{rem:pattern}
+Three features are worth recording, and one tempting guess is false.
+
+\emph{(a) The $3$ sits at or near the end, but ``at the end'' is not the
+criterion.}  Four of the nine have $c$-trace exactly $(1,\dots,1,3)$.  It is
+tempting to conjecture that among the elements with $\max_pc_p=3$, simple
+spectrum holds precisely for those with $c$-trace $(1,\dots,1,3)$.  This is
+false: of the nine, five have another shape, and conversely the condition is
+not sufficient in the $\max_pc_p=2$ range, where $15$ elements of $E_6\cup
+E_7$ have $c$-trace $(1,\dots,1,2)$ and fail simple spectrum.  We flag this
+because the guess survives any inspection of minimal-length representatives
+--- in each of the three families above, the shortest element does have
+$c$-trace $(1,\dots,1,3)$ --- and is refuted only by the full list.
+
+\emph{(b) $\la$ is always adjacent to or at the trivalent node.}  All nine
+occur at $\la\in\{\om_3,\om_4,\om_5\}$, and in $E_6$ only at $\om_4$.  This is
+consistent with the $E_8$ data: $\om_1$ and $\om_8$, the two fundamental
+weights farthest from vertex $4$, admit no $c$-trace entry $3$ whatsoever.
+
+\emph{(c) Items (5)--(8) and (9) extend (1) by minuscule letters.}  Example
+(1) is the unique one in $E_6$; (5) is its image in $E_7$, with the same $w$,
+the same $v$ in the first six coordinates and the same $V$; and (6), (7), (8)
+are obtained from (5) by prepending $s_7$, $s_6s_7$, $s_5s_6s_7$, each step
+appending a single minuscule letter and adding one box to $V$.  So the nine
+are not nine unrelated accidents but four orbits of one phenomenon: a single
+non-minuscule step of weight $3$ at the trivalent node, surrounded by
+minuscule steps.
+
+\emph{(d) $c_p\ge4$.}  There are $7560$ extremal weights in $E_6\cup E_7$ with
+$\max_pc_p\ge4$ --- all of them in $E_7$ at $\la=\om_4$, all with
+$\max_pc_p=4$ exactly --- and not one has simple spectrum.  We state this as a
+computation and not as a theorem; it is the natural next thing to prove, and a
+proof would have to explain why $3$ is possible and $4$ is not.
+\end{remark}
+
+\section{Example (1) in full}
+
+The smallest of the nine is small enough to be checked by hand, and we give it
+in full so that a reader can verify Table \ref{tab:nine} independently of any
+code.
+
+Take $\Gamma=E_6$, $\la=\om_4$ and
+$w=s_2s_4s_5s_6s_3s_4s_5s_1s_3s_4$, of length $10$.  Acting with the rightmost
+letter first on $\la=(0,0,0,1,0,0)$, the trace is
+\[
+\begin{array}{r@{\quad}c@{\quad}r@{\quad}l}
+ p & i_p & c_p & \mu^{(p)} \\
+ 1 & 4 & 1 & (0,1,1,-1,1,0) \\
+ 2 & 3 & 1 & (1,1,-1,0,1,0) \\
+ 3 & 1 & 1 & (-1,1,0,0,1,0) \\
+ 4 & 5 & 1 & (-1,1,0,1,-1,1) \\
+ 5 & 4 & 1 & (-1,2,1,-1,0,1) \\
+ 6 & 3 & 1 & (0,2,-1,0,0,1) \\
+ 7 & 6 & 1 & (0,2,-1,0,1,-1) \\
+ 8 & 5 & 1 & (0,2,-1,1,-1,0) \\
+ 9 & 4 & 1 & (0,3,0,-1,0,0) \\
+10 & 2 & 3 & (0,-3,0,2,0,0)
+\end{array}
+\]
+so $\mu=w\la=(0,-3,0,2,0,0)$ and the single non-minuscule step is the last
+one, at the trivalent neighbour $2$, where $\langle\al_2^\vee,\mu^{(9)}\rangle=3$.
+Hence
+\[
+   v\ =\ \la-w\la\ =\ \al_1+3\al_2+2\al_3+3\al_4+2\al_5+\al_6,
+   \qquad |v|=12 .
+\]
+Since $\mu\in W\la$ we have $(\mu,\mu)=(\la,\la)$, so $\delta(v)=0$ and $v$ is
+extremal; by the uniqueness statement of the companion work, $I_\ka$ has at
+most one submodule of dimension vector $v$, and exhibiting one identifies it
+with $V$.  The weighted sequence $\sigma$ is the word read in trace order with
+the last letter tripled,
+\[
+   \sigma\ =\ (4,3,1,5,4,3,6,5,4,2,2,2),
+\]
+and the iterated socle $\soc_\sigma(I_4)$ has layers, from the bottom,
+\[
+   \{4\},\quad \{2,3,5\},\quad \{1,4,6\},\quad \{2,3,5\},\quad \{4\},\quad \{2\} .
+\]
+Summing the layers gives $v$, each layer is multiplicity-free, and each colour
+appears in distinct layers; so the spectrum is simple.  Note that the last
+socle step, of colour $2$ and multiplicity $3$, contributes the three
+occurrences of colour $2$ in three \emph{different} layers --- the second,
+fourth and sixth from the bottom --- which is exactly why a step of weight $3$ need
+not destroy simple spectrum.  A step of weight $c$ contributing $c$ boxes to a
+\emph{single} layer is the failure mode, and it is what happens at all of the
+other $479$ elements of $E_6$ with a $c$-trace entry $3$.
+
+\section{Reproducing the computation}
+
+The scripts are in the repository accompanying this note.  With
+\verb|rootsys.py|, \verb|proj2.py|, \verb|wordtrace.py|, \verb|socle.py| and
+\verb|dfs3.py| in the working directory:
+
+\begin{itemize}
+\item \verb|python3 socle.py| --- validates the socle method against the
+submodule search on the worked examples, including the $D_4$ element that is
+fully commutative without simple spectrum.
+\item \verb|python3 socval.py E6 5| --- full cross-validation of the two
+methods over one orbit; likewise \verb|A3 1|, \verb|D5 4|, \verb|E6 6|,
+\verb|E6 4|, \verb|D4 2|.
+\item \verb|python3 escan.py E6| and \verb|python3 escan.py E7| --- the
+exhaustive scans, about $3$ seconds and about $3$ minutes respectively.
+\item \verb|python3 enine.py| --- regenerates Table \ref{tab:nine}.
+\item \verb|python3 escan.py E8 1 1| and \verb|python3 escan.py E8 8 8| ---
+the two $E_8$ weights that are within reach.
+\end{itemize}
+
+All computations are linear algebra over $\mathbb{F}_p$, with $p$ set by the
+environment variable \verb|DKKP| (default $7$).  The socle filtration is a
+sequence of kernels of integer matrices, so a $p$-dependent answer would
+require a $p$-torsion coincidence in one of those kernels.  We ran the
+complete $E_6\cup E_7$ scan at $p=7$, $p=11$ and $p=32003$; all four counts of
+\S\ref{sec:scope} and Remark \ref{rem:pattern}, and the list of nine itself,
+were identical at all three.  This is evidence of $p$-independence, not a
+proof of it.
+
+\section{Open ends}
+
+\begin{enumerate}[label=(\arabic*)]
+\item $E_8$ at $\la=\om_2,\dots,\om_7$ is not covered.  The obstruction is the
+orbit enumeration, not the socle computation: the latter costs about
+$10$--$100$\,ms per element, so $\om_7$ (orbit $6720$), $\om_2$ (orbit
+$17280$) and $\om_6$ (orbit $60480$) are a matter of minutes to hours, while
+$\om_3,\om_4,\om_5$ run to the millions and need the search restricted by the
+$c$-trace rather than run over the whole orbit.
+\item Remark \ref{rem:pattern}(d) --- that $c_p\ge4$ never admits simple
+spectrum --- is unproved, and is the sharpest statement the data suggests.
+\item A conceptual description of the nine, replacing the list.  Remark
+\ref{rem:pattern}(c) reduces them to four, and the mechanism isolated at the
+end of \S3 --- whether the $c$ boxes of a weight-$c$ step land in $c$ distinct
+socle layers --- is presumably the right invariant to make precise.
+\item Whether the nine examples survive in characteristic $2$, where the
+strand decomposition of the companion work is unavailable.
+\end{enumerate}
+
+\end{document}
