@@ -52,5 +52,10 @@ w,n,th,down,nc,t=best
 print(f"SMALLEST WITNESS   type {t}, reduced word {w}, |P| = {n}")
 print(f"  true hook multiset (from the series, is_product): {th}")
 print(f"  choices in the Def 2.6 family exhausted: {nc}  -- none gives that multiset")
-print(f"  heap, each element -> its lower covers:")
-for x in sorted(down): print(f"    {x}: {sorted(down[x])}")
+# heap_down returns a LIST of down-sets, one per position; derive the covers
+below=[set(S) for S in down]
+print(f"  positions 1..{n}, colour, and lower covers:")
+for u in range(n):
+    cov=[x for x in below[u]
+         if not any(x in below[y] for y in below[u] if y != x)]
+    print(f"    p{u+1}  colour {w[u]+1}  lower covers {[x+1 for x in sorted(cov)]}")
