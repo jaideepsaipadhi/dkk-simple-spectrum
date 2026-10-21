@@ -40,7 +40,7 @@
 $\la$-minuscule range:\\ the extremal weights with a $c$-trace entry $3$}
 
 \author{Jaideep Sai Padhi}
-\address{Department of Mathematics, Purdue University, West Lafayette, IN 47907}
+\address{Department of Computer Science, Purdue University, West Lafayette, IN 47907}
 \email{jpadhi@purdue.edu}
 
 \begin{abstract}
@@ -63,10 +63,13 @@ the claims of this note are computational, not proved.
 
 \section{What is computed, and what is not}\label{sec:scope}
 
-Everything in this note is the output of a finite computation, performed in two
-independent ways that agree on every case where both terminate.  Nothing here
-is proved.  We say this at the outset because the companion
-work is proof-based and we do not wish the two to be confused.
+The table and the counts in this note are the output of a finite computation,
+performed in two independent ways that agree on every case where both
+terminate.  We say this at the outset because the companion work is
+proof-based and we do not wish the two to be confused.  The one exception is
+\S\ref{sec:node}, which is proved, and which is what explains the position of
+the weight-$3$ step; each statement there is labelled as proved or as
+computed.
 
 The two methods are:
 
@@ -107,7 +110,9 @@ Method (i) alone was then run exhaustively.  We note precisely what
 \item $E_6$: all six fundamental $\la$, all $1272$ nontrivial extremal
 weights (orbit sizes $27,72,216,720,216,27$).  Complete.
 \item $E_7$: all seven fundamental $\la$, all $17635$ nontrivial extremal
-weights (orbit sizes $126,576,2016,10080,4032,756,56$).  Complete.
+weights; the orbit sizes are
+\[126,\ 576,\ 2016,\ 10080,\ 4032,\ 756,\ 56 .\]
+Complete.
 \item $E_8$: $\la=\om_1$ and $\la=\om_8$ only (orbit sizes $2160$ and $240$).
 Both reach $\max_pc_p=2$ and contain no element with a $c$-trace entry $3$ at
 all.  The remaining six fundamental weights of $E_8$ have orbits too large for
@@ -138,7 +143,8 @@ the $7094$ such triples in $E_6\cup E_7$, these nine are the only ones.
 \end{theorem}
 
 \begin{table}[ht]
-\small
+\scriptsize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}rllrl@{}}
 \toprule
  & $\Gamma$, $\la$ & $w$ & $\ell(w)$ & $c$-trace \\
@@ -200,10 +206,17 @@ the same $v$ in the first six coordinates and the same $V$; and (6), (7), (8)
 are obtained from (5) by prepending $s_7$, $s_6s_7$, $s_5s_6s_7$, each step
 appending a single minuscule letter and adding one box to $V$.  So the nine
 are not nine unrelated accidents but four orbits of one phenomenon: a single
-non-minuscule step of weight $3$ at the trivalent node, surrounded by
-minuscule steps.
+non-minuscule step of weight $3$, surrounded by minuscule steps.
 
-\emph{(d) $c_p\ge4$.}  There are $7560$ extremal weights in $E_6\cup E_7$ with
+\emph{(d) The weight-$3$ step is never at the trivalent node.}  Reading the
+$c$-trace in the order fixed by the Convention above, its last entry belongs to
+the leftmost letter of $w$, so the table already locates the $3$: it
+sits at vertex $2$ in six of the nine, at vertex $3$ in two, and at vertex $1$
+in one.  Vertex $4$ never carries it.  More than that, in all nine the
+trivalent node carries $c_p=1$ at \emph{every} one of its occurrences.  That is
+not an accident of the list, and \S\ref{sec:node} says why.
+
+\emph{(e) $c_p\ge4$.}  There are $7560$ extremal weights in $E_6\cup E_7$ with
 $\max_pc_p\ge4$ --- all of them in $E_7$ at $\la=\om_4$, all with
 $\max_pc_p=4$ exactly --- and not one has simple spectrum.  We state this as a
 computation and not as a theorem; it is the natural next thing to prove, and a
@@ -262,6 +275,66 @@ not destroy simple spectrum.  A step of weight $c$ contributing $c$ boxes to a
 \emph{single} layer is the failure mode, and it is what happens at all of the
 other $479$ elements of $E_6$ with a $c$-trace entry $3$.
 
+\section{Why the weight-$3$ step avoids the node}\label{sec:node}
+
+Two statements of the companion work bear directly on the table, and unlike the
+rest of this note they are proved.  Write $t$ for the trivalent node.
+
+\begin{lemma}[proved]\label{lem:vsum}
+$v_i=\sum_{p:\,i_p=i}c_p$ for every vertex $i$.
+\end{lemma}
+
+This is the telescoping of $\mu^{(p)}=\mu^{(p-1)}-c_p\al_{i_p}$ against
+$\la-w\la=\sum_iv_i\al_i$.
+
+\begin{lemma}[proved]\label{lem:lone}
+Suppose every connected component of $\Gamma\setminus\{t\}$ is of type $A$ ---
+which holds for $D_n$ and for $E_6$, $E_7$, $E_8$, hence for every simply-laced
+$\Gamma$ with a branch node.  If $t$ occurs exactly once in a reduced word for
+$w$, its $c$-trace entry is $1$.
+\end{lemma}
+
+The proof is short.  The suffix $u$ after the unique occurrence of $t$ lies in
+the parabolic $W_{I\setminus\{t\}}$, and writing
+$\la-u\la=\sum_jv_j(u)\al_j$ and pairing with $\al_t^\vee$ gives
+$c_p=\langle\al_t^\vee,\la\rangle+\sum_{j\sim t}v_j(u)$.  The components of
+$\Gamma\setminus\{t\}$ not containing $\ka$ fix $\la$, so only one term
+survives; and in a type-$A$ component the coefficient at the end of the chain
+adjacent to $t$ is at most $1$.  As a check, enumerating the whole parabolic
+--- of order $72$, $288$, $1440$ for $E_6$, $E_7$, $E_8$ --- confirms that the
+maximum over every possible lone node step is $1$, for every fundamental
+$\la$.
+
+Together these give, \emph{in type $D$}, that a $c$-trace entry $\ge2$ at $t$
+forbids simple spectrum: by Lemma \ref{lem:lone} the colour $t$ then occurs at
+least twice, so $v_t\ge3$ by Lemma \ref{lem:vsum}, and the type-$D$ criterion
+$v_t\le2$ denies simple spectrum.  In type $E$ the last step is unavailable,
+since $v_t\ge3$ does \emph{not} forbid simple spectrum there.  What we can
+report is that the conclusion holds anyway: among the $1272$ extremal weights
+of the six fundamental $\la$ of $E_6$, the $831$ whose $c$-trace exceeds $1$
+at the trivalent node all fail to have simple spectrum, with no exception.  We
+do not know a proof of the type-$E$ statement.
+
+This is the reason Remark \ref{rem:pattern}(d) looks the way it does: a
+weight-$3$ step cannot sit at $t$, so it is forced onto a vertex of smaller
+degree, and the table shows it at vertices $2$, $3$ and $1$.
+
+Lemma \ref{lem:vsum} also yields a bound where the orbits cannot be
+enumerated.  Simple spectrum means every colour-$i$ column of $V$ is
+multiplicity free, so $v_i\le L_i$, the number of degrees in which the
+colour-$i$ column of $I_\ka$ is nonzero; and $c_p\le v_{i_p}$ by Lemma
+\ref{lem:vsum}, every $c_q$ being positive.  Hence
+\[
+   c_p\;\le\;L_{i_p}\qquad\text{for every }p,
+\]
+whenever $V$ has simple spectrum.  Computing the $L_i$ from the profile of
+$I_\ka$ --- which needs no orbit enumeration --- gives $c_p\le6$ in $E_6$,
+$c_p\le9$ in $E_7$ and $c_p\le15$ in $E_8$.  These are far from sharp: the
+observed maximum of $c_p$ over \emph{all} extremal weights is $3$ in $E_6$ and
+$4$ in $E_7$, and over the simple-spectrum ones it is $3$ in both.  But they
+are proved, they hold in $E_8$, and they reduce Remark
+\ref{rem:pattern}(e) from an unbounded statement to a finite one.
+
 \section{Reproducing the computation}
 
 The scripts are in the repository accompanying this note.  With
@@ -300,8 +373,11 @@ $10$--$100$\,ms per element, so $\om_7$ (orbit $6720$), $\om_2$ (orbit
 $17280$) and $\om_6$ (orbit $60480$) are a matter of minutes to hours, while
 $\om_3,\om_4,\om_5$ run to the millions and need the search restricted by the
 $c$-trace rather than run over the whole orbit.
-\item Remark \ref{rem:pattern}(d) --- that $c_p\ge4$ never admits simple
+\item Remark \ref{rem:pattern}(e) --- that $c_p\ge4$ never admits simple
 spectrum --- is unproved, and is the sharpest statement the data suggests.
+\S\ref{sec:node} reduces it to a finite check by bounding $c_p$ above, but the
+bound is $6$, $9$, $15$ in $E_6$, $E_7$, $E_8$ against a true value of $3$, so
+the gap is still wide.
 \item A conceptual description of the nine, replacing the list.  Remark
 \ref{rem:pattern}(c) reduces them to four, and the mechanism isolated at the
 end of \S3 --- whether the $c$ boxes of a weight-$c$ step land in $c$ distinct
