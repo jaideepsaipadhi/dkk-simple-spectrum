@@ -513,7 +513,7 @@ def D_manuscript():
     """Every headline count this audit computes must appear in the manuscript
     and in the README.  This is what catches a number going stale after a
     change -- the most likely way a wrong claim survives."""
-    tex, rdm = _digits("paper.tex"), _digits("README.md")
+    tex, rdm = _digits("typeD.tex"), _digits("README.md")
     want = {}
     for tag, label, ok, detail in RES:
         for tok in detail.replace("/", " ").split():
@@ -525,7 +525,7 @@ def D_manuscript():
     head = sorted((t for t in want if int(t) >= 100000), key=int)
     bad_t = [t for t in head if t not in tex]
     bad_r = [t for t in head if t not in rdm]
-    record("D1", "the manuscript quotes the headline counts",
+    record("D1", "typeD.tex quotes the headline counts",
            not bad_t, f"{len(head)-len(bad_t)}/{len(head)}"
            + (f"  missing {bad_t}" if bad_t else ""))
     record("D2", "the README quotes them too",

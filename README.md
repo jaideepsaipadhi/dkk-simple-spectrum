@@ -86,6 +86,17 @@ in §14.2 of `typeD.pdf`. The largest:
 The criterion check was produced by a from-scratch implementation sharing no
 code with the rest of the project.
 
+The closure arithmetic of the type-D proof is checked separately from closed
+forms over D₅–D₄₅, every k and every a, by `thresh.py`:
+
+    (T0) rank = min(dim, dim)                        2922500 / 2922500
+    (G1), (G2) the profile inequalities               164160 / 164160
+    up-closed in each strand                         8047275 / 8047275
+    the occupation formula reproduces the truncation   459282 / 459282
+    the two increment bounds                           445178 / 445178 each
+    (P2) a drop only at p <= a or at t                 148994 / 148994
+    (Q4) every leaf obligation lands in a full slot    446982 / 446982
+
 ## Negative results worth recording
 
 **Full commutativity is neither necessary nor sufficient.** In D₄,
